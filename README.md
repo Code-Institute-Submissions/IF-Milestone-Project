@@ -1,11 +1,14 @@
 # Your Project's Name
 
 The project's end-goal is the creation of a site for the hosting of a 
-JavaScript implementation of GAME_NAME, with an extensible design allowing 
+JavaScript implementation of blackjack, with an extensible design allowing 
 for the potential future implementation of more games on the site.
  
+This will create value for both the user, as it wil allow for online entertainment via the playing of the provided games,
+and value for the site-owner, as they will be able to play the games on the site, and potential add new games via the template site formatting.
+
 ## UX
- 
+
 Use this section to provide insight into your UX process, focusing on who this website is for, what it is that they want to achieve and how your project is the best way to help them achieve these things.
 
 In particular, as part of this section we recommend that you provide a list of User Stories, with the following general structure:
