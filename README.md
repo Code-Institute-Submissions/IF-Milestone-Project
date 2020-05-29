@@ -1,6 +1,8 @@
 # Your Project's Name
 
-One or two paragraphs providing an overview of your project.
+The project's end-goal is the creation of a site for the hosting of a 
+JavaScript implementation of GAME_NAME, with an extensible design allowing 
+for the potential future implementation of more games on the site.
 
 Essentially, this part is your sales pitch.
  
