@@ -9,10 +9,24 @@ and value for the site-owner, as they will be able to play the games on the site
 
 ## UX
 
-Use this section to provide insight into your UX process, focusing on who this website is for, what it is that they want to achieve and how your project is the best way to help them achieve these things.
+### Strategy
+The aim is to develop and deploy a site for the hosting and playing of JavaScript-based games; with an extensible design for the possible implementation of additional games in disparate formats; An intuitive to navigate site layout; and the implementation of atleast one game.  
 
-In particular, as part of this section we recommend that you provide a list of User Stories, with the following general structure:
-- As a user type, I want to perform an action, so that I can achieve a goal.
+### Scope
+Minimum Viable Product consists of A HTML homepage, A single game's page, and the game in question: a javascript implementation of blackjack. 
+
+### Structure
+
+
+### Skeleton
+
+
+### Surface
+
+
+#### User Stories
+
+
 
 This section is also where you would share links to any wireframes, mockups, diagrams etc. that you created as part of the design process. These files should themselves either be included as a pdf file in the project itself (in an separate directory), or just hosted elsewhere online and can be in any format that is viewable inside the browser.
 
