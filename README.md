@@ -12,6 +12,9 @@ and value for the site-owner, as they will be able to play the games on the site
 ### Strategy
 The aim is to develop and deploy a site for the hosting and playing of JavaScript-based games; with an extensible design for the possible implementation of additional games in disparate formats; An intuitive to navigate site layout; and the implementation of atleast one game.  
 
+The first task in this project was to research the layout of site with a similar objective to provide an experience that is proven to work, and be immediately familiar to anyone that may have used one of those sites.
+Then the full rules of blackjack for both player and dealer needed to be researched and recorded, to ensure a complete and authentic gameplay experience.
+
 ### Scope
 Minimum Viable Product consists of A HTML homepage, A single game's page, and the game in question: a javascript implementation of blackjack. 
 
