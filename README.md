@@ -23,14 +23,34 @@ To provide the proper elements for the javascript to funciton cleanly and effici
 No data beyond the site itself and the scripts therein will be held server-side, as no log-in or data entry is required. Beyond the running of the game itself, some data will be stored clientside, that being win/loss rate data, along with the potential for some other miscellaneous stats.
 
 ### Skeleton
-
 ![Wireframe](design/mockup-IFv2.png)
 
 ### Surface
 ![Colour Palette](design/colorpalette.png)
 
-#### User Stories
+Additionally, card art was found in both PNG and SVG format, but PNG was chosen as the SVG versions were missing the card back.
 
+#### User Stories & Breakdown Thereof
+
+Due to the nature of the site, the pretty much all the user stories are going to apply to a site owner.
+
+- As a User, I want to be able to view a video of the rules, or read a write up of them so that I can understand and enjoy the game.
+    - Button to show rules
+        - Button opens modal with youtube video (possibly with a toggle to show text instead, as per the user's preference, time permitting.)
+        - Modal needs: close button, background darkening, main element, youtube video embed (toggle button, text of rules), and appropriate scripting to perform this. 
+
+- As a User, I want to see my own hand, along with one card of the dealer's so that I can make an informed decision on what move to make.
+    - Display user's hand as they play
+        - Use card art mentioned in media section
+        - card art needs to be displayed as nessicary, with the possiblity of simplistic animations to immerse the user.
+        - dealer's hand needs special consideration, as functionality to have card hidden until end is nessicary.
+
+- As a User, I want to see and interact with a replay button so that I can continue to play the game and enjoy myself.
+    - when the game hits an END state, needs to display a simple replay button, possibly along with a 'you win'/'you lose' thing.
+
+- As a User, I want to have a clear website design with a sensible colour palette so that I can easliy read the website.
+    - Decided on the aforeshown colour palette, as it is both fairly readable and reminiscent of a cards table.
+        - Despite this, will still need to be careful about useage of colour in page due to the red/green colour palette lining up with the most common form of colour blindness.
 
 
 ## Features
