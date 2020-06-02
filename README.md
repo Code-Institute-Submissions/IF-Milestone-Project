@@ -16,7 +16,7 @@ The first task in this project was to research the layout of site with a similar
 Then the full rules of blackjack for both player and dealer needed to be researched and recorded, to ensure a complete and authentic gameplay experience.
 
 ### Scope
-Minimum Viable Product consists of A HTML homepage, A single game's page, and the game in question: a javascript implementation of blackjack. 
+Minimum Viable Product consists of A single game's page, and the game in question: a javascript implementation of blackjack. 
 
 ### Structure
 
