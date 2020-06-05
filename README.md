@@ -72,8 +72,10 @@ In addition, you may also use this section to discuss plans for additional featu
 
 In this section, you should mention all of the languages, frameworks, libraries, and any other tools that you have used to construct this project. For each, provide its name, a link to its official site and a short sentence of why it was used.
 
-- [JQuery](https://jquery.com)
-    - The project uses **JQuery** to simplify DOM manipulation.
+- [Bootstrap](https://getbootstrap.com/)
+    - Used for simplifying page layout.
+    - Requirements:
+        - [JQuery](https://jquery.com/)
 
 
 ## Testing
@@ -111,8 +113,7 @@ In addition, if it is not obvious, you should also describe how to run your code
 ## Credits
 
 ### Content
-- The text for section Y was copied from the [Wikipedia article Z](https://en.wikipedia.org/wiki/Z)
-
+- Functionality for proper video-supporting modal in bootstrap found on stack overflow https://stackoverflow.com/questions/18622508/bootstrap-3-and-youtube-in-modal
 ### Media
 - Card art obtained from https://github.com/hayeah/playing-cards-assets
 - Colour Palette generated with https://coolors.co/
