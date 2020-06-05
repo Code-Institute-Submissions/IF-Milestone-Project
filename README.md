@@ -114,6 +114,7 @@ In addition, if it is not obvious, you should also describe how to run your code
 
 ### Content
 - Functionality for proper video-supporting modal in bootstrap found on stack overflow https://stackoverflow.com/questions/18622508/bootstrap-3-and-youtube-in-modal
+    - modified from answer by user "jeremykenedy"
 ### Media
 - Card art obtained from https://github.com/hayeah/playing-cards-assets
 - Colour Palette generated with https://coolors.co/
