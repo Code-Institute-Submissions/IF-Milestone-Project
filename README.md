@@ -115,6 +115,8 @@ In addition, if it is not obvious, you should also describe how to run your code
 ### Content
 - Functionality for proper video-supporting modal in bootstrap found on stack overflow https://stackoverflow.com/questions/18622508/bootstrap-3-and-youtube-in-modal
     - modified from answer by user "jeremykenedy"
+- Canvas element creation code taken from W3Schools https://www.w3schools.com/graphics/game_canvas.asp
+
 ### Media
 - Card art obtained from https://github.com/hayeah/playing-cards-assets
 - Colour Palette generated with https://coolors.co/

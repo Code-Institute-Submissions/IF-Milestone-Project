@@ -5,9 +5,7 @@
 /*header*/
 
 /*game container*/
-.game-container{
-    width:80vw;
-    height: 60vw;
+.GameContainer{
     background-color:#386641;
 }
 

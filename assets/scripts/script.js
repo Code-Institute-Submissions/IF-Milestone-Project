@@ -15,3 +15,19 @@ function generateYoutubeModal(){//actually, gonna see if i can optimise this fun
 $(document).ready(function(){
     generateYoutubeModal();
 });
+
+function initGame(){
+    gameArea.start();
+}
+
+//Blackjack Game Code
+var gameArea = {
+    canvas : document.createElement("canvas"),
+    container: document.getElementsByClassName("GameContainer"),
+    start : function(){
+        this.canvas.width = "700";
+        this.canvas.height = "700";
+        this.context = this.canvas.getContext("2d");
+        this.container[0].insertBefore(this.canvas, null);
+    },
+}

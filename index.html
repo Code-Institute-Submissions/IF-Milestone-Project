@@ -12,7 +12,7 @@
     <!--FontAwesome Script Import-->
     <script src="https://kit.fontawesome.com/5fab42f761.js" crossorigin="anonymous"></script>
 </head>
-<body class="container-fluid">
+<body onload="initGame()" class="container-fluid">
     <!--Header, just a bar with a site logo and button to display the rules modal-->
     <header>
         <navbar class="row justify-content-between">
@@ -25,8 +25,8 @@
                 <h3>How to Play <i class="fas fa-book"></i></h3>
             </button>
             <!-- Rules Modal -->
-            <div class="col-8 modal fade" id="rulesModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog">
+            <div class="modal fade" id="rulesModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">How to play Blackjack</h5>
@@ -35,7 +35,14 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                                <iframe width="100%" height="350" src="#" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <iframe class="col-12" width="560" height="315" src="#" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <div class="row">
+                                rules go here too
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -43,8 +50,7 @@
         </navbar>
     </header>
     <section class="row justify-content-center align-items-center">
-            <div class="game-container col-8">
-                test
+            <div class="GameContainer">
             </div>
     </section>
     <!--Bootstrap Dependencies, including JQuery-->
