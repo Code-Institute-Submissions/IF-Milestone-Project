@@ -22,12 +22,61 @@ function initGame(){
 
 //Blackjack Game Code
 
-//prototyping card class
+//card class
 class card {
-    constructor(value, suit) {
-        this.value = value;
+    constructor(face, suit) {
+        //ok so this hits a really weird taxonomic problem, where i don't think there's a specific name for non-face cards,
+        //so I need to differentiate the numeric values of the cards for the hand sorting in the handValCalc function.
+        //for simplicity's sake, this.face refers to the proper name of the card,
+        //and this.value is the card's numeric value in a hand under normal conditions, with the exception of the ace, which needs special handling.
+        this.face = face;
         this.suit = suit;
         this.flipped = false;
+        //and that whole bit above leads to this switch statement, to properly assign the numeric value for sorting.
+        switch(this.face){
+            case "ace":
+                this.value = 0;//ok so this is really weird but i need the ace last in the sort
+                break;
+            case "2"://Don't like having the values stored like this, but it's too awkward otherwise, as it'd need a specific face value only certain cards have
+                this.value = 2;
+                break;
+            case "3"://while that'd assuredly have a smaller memory footprint, this is faster to make.
+                this.value = 3;
+                break;
+            case "4":
+                this.value = 4;
+                break;
+            case "5":
+                this.value = 5;
+                break;
+            case "6":
+                this.value = 6;
+                break;
+            case "7":
+                this.value = 7;
+                break;
+            case "8":
+                this.value = 8;
+                break;
+            case "9":
+                this.value = 9;
+                break;
+            case "10":
+                this.value = 10;
+                break;
+            case "jack":
+                this.value = 10;
+                break;
+            case "queen":
+                this.value = 10;
+                break;
+            case "king":
+                this.value = 10;
+                break;
+            default:
+                console.log("this should never happen, default switch case in card constructor being triggered"); //debug error message, to be removed for deployment branch
+                break;
+        };
     }
 }
 
@@ -49,8 +98,15 @@ function shuffle(array) {
   }
 
   return array;
-}
+};
 
+function handValCheck(playerHand, dealerHand){
+//custom sorting function
+    var pEndHand = playerHand.slice().sort(function(a,b){return a.value - b.value}).reverse();//sorts the hand by in ascending order of card value, then reverses it for easier calculation
+    var dEndHand = dealerHand.slice().sort(function(a,b){return a.value - b.value}).reverse();
+    
+    
+};
 //the game area class code, along with a constructor
 var gameArea = {
     canvas : document.createElement("canvas"), //creates a canvas object  
