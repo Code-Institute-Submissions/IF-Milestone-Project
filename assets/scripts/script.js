@@ -34,3 +34,9 @@ var gameArea = {
         this.container[0].insertBefore(this.canvas, null); //adds the canvas to the DOM
     }
 }
+
+function card(value, suit){
+    this.value = value;
+    this.suit = suit;
+    this.flipped = false;
+}
