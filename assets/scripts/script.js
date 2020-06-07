@@ -21,13 +21,16 @@ function initGame(){
 }
 
 //Blackjack Game Code
+
+//the game area class code, along with a constructor
 var gameArea = {
-    canvas : document.createElement("canvas"),
-    container: document.getElementsByClassName("GameContainer"),
+    canvas : document.createElement("canvas"), //creates a canvas object  
+    container: document.getElementsByClassName("GameContainer"),//gets where the canvas is to go
     start : function(){
+        //width and height for the function
         this.canvas.width = "700";
         this.canvas.height = "700";
-        this.context = this.canvas.getContext("2d");
-        this.container[0].insertBefore(this.canvas, null);
-    },
+        this.context = this.canvas.getContext("2d"); //gets the context for image drawing and manipulation methods
+        this.container[0].insertBefore(this.canvas, null); //adds the canvas to the DOM
+    }
 }
