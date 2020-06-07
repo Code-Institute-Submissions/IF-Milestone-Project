@@ -22,6 +22,35 @@ function initGame(){
 
 //Blackjack Game Code
 
+//prototyping card class
+class card {
+    constructor(value, suit) {
+        this.value = value;
+        this.suit = suit;
+        this.flipped = false;
+    }
+}
+
+//implementation of a Fisher-Yates shuffle, taken from bost.ocks
+//takes an array, returns a shuffled array in an efficient manner.
+function shuffle(array) {
+  var m = array.length, t, i;
+
+  // While there remain elements to shuffle…
+  while (m) {
+
+    // Pick a remaining element…
+    i = Math.floor(Math.random() * m--);
+
+    // And swap it with the current element.
+    t = array[m];
+    array[m] = array[i];
+    array[i] = t;
+  }
+
+  return array;
+}
+
 //the game area class code, along with a constructor
 var gameArea = {
     canvas : document.createElement("canvas"), //creates a canvas object  
@@ -35,8 +64,4 @@ var gameArea = {
     }
 }
 
-function card(value, suit){
-    this.value = value;
-    this.suit = suit;
-    this.flipped = false;
-}
+
