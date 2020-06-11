@@ -16,6 +16,8 @@ $(document).ready(function(){
     generateYoutubeModal();
 });
 
+//don't forget to re-organise all this once you're done, this is pretty messy dude.
+
 function initGame(){
     gameArea.start();
 }
@@ -25,22 +27,23 @@ function initGame(){
 //card class
 class card {
     constructor(face, suit) {
-        //ok so this hits a really weird taxonomic problem, where i don't think there's a specific name for non-face cards,
-        //so I need to differentiate the numeric values of the cards for the hand sorting in the handValCalc function.
-        //for simplicity's sake, this.face refers to the proper name of the card,
-        //and this.value is the card's numeric value in a hand under normal conditions, with the exception of the ace, which needs special handling.
+        //This hits a really weird taxonomic problem where I don't think there's a specific name for non-face cards,
+        //so I need to differentiate the numeric values of the cards for the sake of sorting in the handCalc function.
+        //For simplicity's sake, this.face refers to the proper name of the card,
+        //And this.value is the card's numeric value in a hand under normal conditions, with the exception of the ace, which needs special handling.
+        //This will also allow for a nice and easy string literal for pulling the card art from the image folder.
         this.face = face;
         this.suit = suit;
         this.flipped = false;
-        //and that whole bit above leads to this switch statement, to properly assign the numeric value for sorting.
+        //And that whole bit above leads to this switch statement which properly assigns the numeric values for sorting.
         switch(this.face){
             case "ace":
-                this.value = 0;//ok so this is really weird but i need the ace last in the sort
+                this.value = 0;//This is a little odd, but I need the ace last in the sort
                 break;
-            case "2"://Don't like having the values stored like this, but it's too awkward otherwise, as it'd need a specific face value only certain cards have
+            case "2"://Don't much like having the values assigned like this but it's too awkward otherwise, as it'd need a specific face value only certain cards have
                 this.value = 2;
                 break;
-            case "3"://while that'd assuredly have a smaller memory footprint, this is faster to make.
+            case "3"://while that'd assuredly have a smaller memory footprint, this is faster to code.
                 this.value = 3;
                 break;
             case "4":
@@ -80,8 +83,8 @@ class card {
     }
 }
 
-//implementation of a Fisher-Yates shuffle, taken from bost.ocks
-//takes an array, returns a shuffled array in an efficient manner.
+//Implementation of a Fisher-Yates shuffle, taken from bost.ocks
+//Takes an array, returns a shuffled array in an efficient manner.
 function shuffle(array) {
   var m = array.length, t, i;
 
@@ -100,24 +103,39 @@ function shuffle(array) {
   return array;
 };
 
-function handValCheck(playerHand, dealerHand){
-//custom sorting function
-    var pEndHand = playerHand.slice().sort(function(a,b){return a.value - b.value}).reverse();//sorts the hand by in ascending order of card value, then reverses it for easier calculation
-    var dEndHand = dealerHand.slice().sort(function(a,b){return a.value - b.value}).reverse();
-    
-    
+function handCalc(Hand){//Calculates the total value for the given hand.
+    //Sorts the hand by in ascending order of card value, then reverses it for simpler calculation.
+    var sortedHand = Hand.slice().sort(function(a,b){return a.value - b.value}).reverse();
+
+    //Now, to add up the sum of the cards.
+    var handTotal = 0;
+    sortedHand.forEach(element => {
+        if(element.value == 0)
+        {
+            if(handTotal <= 10){
+                handTotal += 11; //Ace is 11 if it wouldn't make the hand go bust,
+            }else{
+                handTotal += 1;//and is 1 otherwise.
+            }
+        }else{
+            handTotal += element.value;
+        }
+    });
+    return handTotal;
 };
-//the game area class code, along with a constructor
+
+//The game area class code, along with a constructor.
 var gameArea = {
-    canvas : document.createElement("canvas"), //creates a canvas object  
-    container: document.getElementsByClassName("GameContainer"),//gets where the canvas is to go
+    canvas : document.createElement("canvas"), //Creates a canvas object. 
+    container: document.getElementsByClassName("GameContainer"),//Gets where the canvas is to be positioned.
     start : function(){
-        //width and height for the function
+        //Width and height for the play-space.
         this.canvas.width = "700";
         this.canvas.height = "700";
-        this.context = this.canvas.getContext("2d"); //gets the context for image drawing and manipulation methods
-        this.container[0].insertBefore(this.canvas, null); //adds the canvas to the DOM
+        this.context = this.canvas.getContext("2d"); //Gets the context for image drawing and manipulation methods.
+        this.container[0].insertBefore(this.canvas, null); //Adds the canvas to the DOM.
     }
 }
 
+//Display Code
 
