@@ -21,13 +21,11 @@ function initGame(){
 }
 
 //Blackjack Game Code
-//Global Variables
+//Global Variables, may replace these with local once more of the game is done.
 var deck = [];
-var playerHand = [];
-var dealerHand = [];
-var winLossRate = [0,0];
+var winLossRate = [0,0]; //will keep as-is before making it cached page data variable thingie
 
-//card class
+//Card Class
 class card {
     constructor(number, suit) {
         switch(number){
@@ -107,6 +105,47 @@ class card {
     }
 }
 
+//Player Class
+class player{
+    constructor(isCpu){
+        this.isCPU = isCpu;
+        this.turn = false;
+        this.hand = [];
+    }
+
+    //Calculates the total value for the entity's hand.
+    handCalc(){
+        //Sorts the hand by in ascending order of card value, then reverses it for simpler calculation.
+        var sortedHand = this.hand.slice().sort(function(a,b){return a.value - b.value}).reverse();
+
+        //Now, to add up the sum of the cards.
+        var handTotal = 0;
+        sortedHand.forEach(element => {
+            if(element.value == 0)
+            {
+                if(handTotal <= 10){
+                    handTotal += 11; //Ace is 11 if it wouldn't make the hand go bust,
+                }else{
+                    handTotal += 1;//and is 1 otherwise.
+                }
+            }else{
+                handTotal += element.value;
+            }
+        });
+    return handTotal;
+    };
+
+    hit(deck){//returns false if the drawn card causes the player's turn to end, either by hitting 21 or going bust, or by hitting 5 cards.
+        this.hand.push(deck.shift());//removes a card from the top of the deck into the entity's hand.
+        var total = this.handCalc();//I know i should probably have the total be a member variable, but the amount of work it'd take to get it working neatly with display code and aces is too much to bother with.
+        if(total >= 21 || this.hand.length == 5)
+        {
+            this.isTurn = false;
+        }
+        return this.isTurn;
+    };
+}
+
 //Deck Generation Function
 function deckGeneration(){
     deck.length = 0;//empty any potentially existing instance of the deck, to prevent it duplicating entries.
@@ -139,28 +178,6 @@ function shuffle(array) {
   }
 
   return array;
-};
-
-//Calculates the total value for the given hand.
-function handCalc(Hand){
-    //Sorts the hand by in ascending order of card value, then reverses it for simpler calculation.
-    var sortedHand = Hand.slice().sort(function(a,b){return a.value - b.value}).reverse();
-
-    //Now, to add up the sum of the cards.
-    var handTotal = 0;
-    sortedHand.forEach(element => {
-        if(element.value == 0)
-        {
-            if(handTotal <= 10){
-                handTotal += 11; //Ace is 11 if it wouldn't make the hand go bust,
-            }else{
-                handTotal += 1;//and is 1 otherwise.
-            }
-        }else{
-            handTotal += element.value;
-        }
-    });
-    return handTotal;
 };
 
 //The game area class code, along with a constructor.
