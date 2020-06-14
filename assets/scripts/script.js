@@ -16,15 +16,9 @@ $(document).ready(function(){
     generateYoutubeModal();
 });
 
-function initGame(){
-    gameArea.generate();
-}
-
 //Blackjack Game Code
-//Global Variables, may replace these with local once more of the game is done.
-var deck = [];
-var winLossRate = [0,0]; //will keep as-is before making it cached page data variable thingie
 
+//Class Decelarations
 //Card Class
 class card {
     constructor(number, suit) {
@@ -107,9 +101,8 @@ class card {
 
 //Player Class
 class player{
-    constructor(isCpu){
-        this.isCPU = isCpu;
-        this.turn = false;
+    constructor(turn){
+        this.turn = turn;
         this.hand = [];
     }
 
@@ -140,11 +133,52 @@ class player{
         var total = this.handCalc();//I know i should probably have the total be a member variable, but the amount of work it'd take to get it working neatly with display code and aces is too much to bother with.
         if(total >= 21 || this.hand.length == 5)
         {
-            this.isTurn = false;
+            this.stand(dealer);
+            console.log(this);
         }
         return this.isTurn;
     };
+    stand(otherPlayer){
+        this.turn = false;
+        document.getElementById("gameControlHit").disabled = true;
+        document.getElementById("gameControlStand").disabled = true;
+        otherPlayer.turn = true;
+    }
 }
+
+//The game area class code, along with a constructor.
+var gameArea = {
+    canvas : document.createElement("canvas"), //Creates a canvas object. 
+    container: document.getElementsByClassName("GameContainer"),//Gets where the canvas is to be positioned.
+    generate : function(){
+        //Width and height for the play-space.
+        this.canvas.width = "700";
+        this.canvas.height = "700";
+        this.context = this.canvas.getContext("2d"); //Gets the context for image drawing and manipulation methods.
+        this.container[0].insertBefore(this.canvas, null); //Adds the canvas to the DOM.
+
+        //then, need to generate the deck before any gamplay can occur.
+        deckGeneration();
+        //then, show the game controls.
+        document.getElementById("startGame").style.display = "none";
+        document.getElementById("gameControlHit").style.display = "inline-block";
+        document.getElementById("gameControlStand").style.display = "inline-block";
+
+        //initial card draws
+        client.hit(deck);
+        dealer.hit(deck);
+        client.hit(deck);
+    },
+    reset:function(){
+        //to be filled in with the game reset code
+    }
+}
+
+//Global Variables
+var deck = [];
+var client = new player(true);
+var dealer = new player(false);
+var winLossRate = [0,0]; //will keep as-is before making it cached page data variable thingie
 
 //Deck Generation Function
 function deckGeneration(){
@@ -155,9 +189,7 @@ function deckGeneration(){
             deck.push(new card(rankNo, suitNo));
         }
     }
-    console.log(deck);
     shuffle(deck);
-    console.log(deck);
 }
 
 //Implementation of a Fisher-Yates shuffle, taken from bost.ocks
@@ -180,20 +212,6 @@ function shuffle(array) {
   return array;
 };
 
-//The game area class code, along with a constructor.
-var gameArea = {
-    canvas : document.createElement("canvas"), //Creates a canvas object. 
-    container: document.getElementsByClassName("GameContainer"),//Gets where the canvas is to be positioned.
-    generate : function(){
-        //Width and height for the play-space.
-        this.canvas.width = "700";
-        this.canvas.height = "700";
-        this.context = this.canvas.getContext("2d"); //Gets the context for image drawing and manipulation methods.
-        this.container[0].insertBefore(this.canvas, null); //Adds the canvas to the DOM.
-
-        //then, need to generate the deck before any gamplay can occur.
-        deckGeneration();
-    }
+function gameStart(){
+    
 }
-
-//Display Code
