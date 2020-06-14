@@ -59,9 +59,9 @@
             </div>
             <div class="row justify-content-center align-items-center">
                 <button id="startGame" class="btn btn-primary col-1" type="button" onclick="gameArea.generate()">Start Game</button>
-                <button id="gameControlHit" class="btn btn-primary col-1" type="button" onclick="client.hit(deck)">Hit</button>
-                <button id="gameControlStand" class="btn btn-primary col-1" type="button" onclick="client.stand(dealer)">Stand</button>
-                <button id="replayGame" class="btn btn-primary col-1" type="button" onclick="">Replay Game</button>
+                <button id="gameControlHit" class="btn btn-primary col-1" type="button" onclick="gameLogic(true)">Hit</button>
+                <button id="gameControlStand" class="btn btn-primary col-1" type="button" onclick="gameLogic(false)">Stand</button>
+                <button id="replayGame" class="btn btn-primary col-1" type="button" onclick="gameArea.generate()">Replay Game</button>
             </div>
     </section>
     

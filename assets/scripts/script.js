@@ -172,7 +172,7 @@ var gameArea = {
 var deck = [];
 var client = new player(true);
 var dealer = new player(false);
-var winLossRate = [0,0]; //will keep as-is before making it cached page data variable thingie
+var winDrawLossRate = [0,0,0]; //will keep as-is before making it cached page data variable thingie
 
 //Deck Generation Function
 function deckGeneration(){
@@ -223,7 +223,11 @@ function gameLogic(moveChoice){
         }
     }
 
-    if(!client.turn && dealer.turn){
+    console.log(client.hand);
+    console.log(dealer.hand);
+
+    //Game has ended if it runs this if() statement.
+    if(!client.turn && !dealer.turn){
         document.getElementById("gameControlHit").style.display = "none";
         document.getElementById("gameControlStand").style.display = "none";
         document.getElementById("replayGame").style.display = "inline-block";
@@ -250,4 +254,8 @@ function gameLogic(moveChoice){
             //draw
         }
     }
+}
+
+function gameEnd(state){
+
 }
