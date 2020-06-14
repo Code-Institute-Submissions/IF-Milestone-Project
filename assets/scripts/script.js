@@ -134,16 +134,9 @@ class player{
         if(total >= 21 || this.hand.length == 5)
         {
             this.stand(dealer);
-            console.log(this);
         }
         return this.isTurn;
     };
-    stand(otherPlayer){
-        this.turn = false;
-        document.getElementById("gameControlHit").disabled = true;
-        document.getElementById("gameControlStand").disabled = true;
-        otherPlayer.turn = true;
-    }
 }
 
 //The game area class code, along with a constructor.
@@ -164,14 +157,15 @@ var gameArea = {
         document.getElementById("gameControlHit").style.display = "inline-block";
         document.getElementById("gameControlStand").style.display = "inline-block";
 
+        //ensures the controls are active
+        document.getElementById("gameControlHit").disabled = false;
+        document.getElementById("gameControlStand").disabled = false;
+
         //initial card draws
         client.hit(deck);
         dealer.hit(deck);
         client.hit(deck);
     },
-    reset:function(){
-        //to be filled in with the game reset code
-    }
 }
 
 //Global Variables
@@ -212,6 +206,48 @@ function shuffle(array) {
   return array;
 };
 
-function gameStart(){
-    
+function gameLogic(moveChoice){
+    //moveChoice is True if the player decided to hit, and false if they decided to stand.
+    var dealerIsActive = false;
+
+    if(moveChoice){
+        dealerIsActive != client.hit();
+    }
+
+    if(dealerIsActive || !moveChoice){//dealer turn is true if the player has gotten 21 or bust, !movechoice is true if the player chose to stand.
+        document.getElementById("gameControlHit").disabled = true;
+        document.getElementById("gameControlStand").disabled = true;
+
+        while(dealer.turn && dealer.handCalc() < 17){//dealer's turn loop.
+            dealer.hit(); 
+        }
+    }
+
+    if(!client.turn && dealer.turn){
+        document.getElementById("gameControlHit").style.display = "none";
+        document.getElementById("gameControlStand").style.display = "none";
+        document.getElementById("replayGame").style.display = "inline-block";
+
+        var clientTotal = client.handCalc();
+        var dealerTotal = dealer.handCalc();
+        
+        if((client.hand.length == 2 && clientTotal == 21)&& dealer.hand.length != 2){
+            //win
+        }
+        else if(clientTotal > 21){
+            //lose
+        }
+        else if(dealerTotal > 21){
+            //win
+        }
+        else if(clientTotal > dealerTotal){
+            //win
+        }
+        else if(dealerTotal < clientTotal){
+            //lose
+        }
+        else{
+            //draw
+        }
+    }
 }
