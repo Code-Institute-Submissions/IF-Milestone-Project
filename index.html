@@ -12,7 +12,7 @@
     <!--FontAwesome Script Import-->
     <script src="https://kit.fontawesome.com/5fab42f761.js" crossorigin="anonymous"></script>
 </head>
-<body onload="initGame()" class="container-fluid">
+<body class="container-fluid">
     <!--Header, just a bar with a site logo and button to display the rules modal-->
     <header>
         <navbar class="row justify-content-between">
@@ -58,8 +58,10 @@
                 </div>
             </div>
             <div class="row justify-content-center align-items-center">
-                <button class="col-1" type="button" onclick="playerHit()">Hit</button>
-                <button class="col-1" type="button" onclick="playerStand()">Stand</button>
+                <button id="startGame" class="btn btn-primary col-1" type="button" onclick="gameArea.generate()">Start Game</button>
+                <button id="gameControlHit" class="btn btn-primary col-1" type="button" onclick="client.hit(deck)">Hit</button>
+                <button id="gameControlStand" class="btn btn-primary col-1" type="button" onclick="client.stand(dealer)">Stand</button>
+                <button id="replayGame" class="btn btn-primary col-1" type="button" onclick="">Replay Game</button>
             </div>
     </section>
     

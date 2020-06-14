@@ -8,6 +8,10 @@
 .GameContainer{
     background-color:#386641;
 }
+/*game buttons*/
+#gameControlHit,#gameControlStand,#replayGame{
+    display:none;
+}
 
 /*footer*/
 
