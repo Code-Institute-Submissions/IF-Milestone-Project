@@ -97,12 +97,15 @@ class card {
                 break;
         };
     }
+    getImageSource(){
+        return `assets/images/cards/${this.rank}_of_${this.suit}.png`;
+    };
 }
 
 //Player Class
 class player{
-    constructor(turn){
-        this.turn = turn;
+    constructor(){
+        this.turn = true;
         this.hand = [];
     }
 
@@ -128,15 +131,27 @@ class player{
     return handTotal;
     };
 
-    hit(deck){//returns false if the drawn card causes the player's turn to end, either by hitting 21 or going bust, or by hitting 5 cards.
-        this.hand.push(deck.shift());//removes a card from the top of the deck into the entity's hand.
+    hit(tarDeck){//returns false if the drawn card causes the player's turn to end, either by hitting 21 or going bust, or by hitting 5 cards.
+        this.hand.push(tarDeck.shift());//removes a card from the top of the deck into the entity's hand.
         var total = this.handCalc();//I know i should probably have the total be a member variable, but the amount of work it'd take to get it working neatly with display code and aces is too much to bother with.
         if(total >= 21 || this.hand.length == 5)
         {
-            this.stand(dealer);
+            this.turn = false;
         }
-        return this.isTurn;
+        return this.turn;
     };
+
+    endTurn(){
+        this.turn = false;
+    }
+
+    getHandImages(){
+        var handImageSources = [];
+        this.hand.forEach(function(element){
+            handImageSources.push(element.getImageSource());
+        });
+        return handImageSources;
+    }
 }
 
 //The game area class code, along with a constructor.
@@ -147,19 +162,25 @@ var gameArea = {
         //Width and height for the play-space.
         this.canvas.width = "700";
         this.canvas.height = "700";
+        this.canvas.id= "GameCanvas";
         this.context = this.canvas.getContext("2d"); //Gets the context for image drawing and manipulation methods.
         this.container[0].insertBefore(this.canvas, null); //Adds the canvas to the DOM.
+
 
         //then, need to generate the deck before any gamplay can occur.
         deckGeneration();
         //then, show the game controls.
         document.getElementById("startGame").style.display = "none";
+        document.getElementById("replayGame").style.display = "none";
         document.getElementById("gameControlHit").style.display = "inline-block";
         document.getElementById("gameControlStand").style.display = "inline-block";
 
         //ensures the controls are active
         document.getElementById("gameControlHit").disabled = false;
         document.getElementById("gameControlStand").disabled = false;
+
+        client = new player();
+        dealer = new player();
 
         //initial card draws
         client.hit(deck);
@@ -170,10 +191,9 @@ var gameArea = {
 
 //Global Variables
 var deck = [];
-var client = new player(true);
-var dealer = new player(false);
 var winDrawLossRate = [0,0,0]; //will keep as-is before making it cached page data variable thingie
-
+var client = 0;
+var dealer = 0;
 //Deck Generation Function
 function deckGeneration(){
     deck.length = 0;//empty any potentially existing instance of the deck, to prevent it duplicating entries.
@@ -211,21 +231,26 @@ function gameLogic(moveChoice){
     var dealerIsActive = false;
 
     if(moveChoice){
-        dealerIsActive != client.hit();
+        dealerIsActive = !client.hit(deck);
     }
 
+    loadImages(client.getHandImages(), drawImageCallback, 0, 0, 100, 150);
+
     if(dealerIsActive || !moveChoice){//dealer turn is true if the player has gotten 21 or bust, !movechoice is true if the player chose to stand.
+        client.endTurn();
         document.getElementById("gameControlHit").disabled = true;
         document.getElementById("gameControlStand").disabled = true;
 
         while(dealer.turn && dealer.handCalc() < 17){//dealer's turn loop.
-            dealer.hit(); 
+            dealer.hit(deck); 
         }
+        dealer.endTurn();
     }
+
+    
 
     console.log(client.hand);
     console.log(dealer.hand);
-
     //Game has ended if it runs this if() statement.
     if(!client.turn && !dealer.turn){
         document.getElementById("gameControlHit").style.display = "none";
@@ -253,6 +278,35 @@ function gameLogic(moveChoice){
         else{
             //draw
         }
+    }
+}
+
+//loadImages code taken & adapted from: html5canvastutorials.com
+function loadImages(sources, callback, x, y, width, height) {
+    var images = {};
+    var loadedImages = 0;
+    var numImages = 0;
+    var canvas = document.getElementById('GameCanvas');
+    var context = canvas.getContext('2d');
+        
+    // get num of sources
+    for(var src in sources) {
+        numImages++;
+    }
+    for(var src in sources) {
+        images[src] = new Image();
+        images[src].onload = function() {
+            if(++loadedImages >= numImages) {
+                callback(context, images, x, y, width, height);
+            }
+        };
+        images[src].src = sources[src];
+    }
+}
+
+function drawImageCallback(context, images, x, y, width, height){
+    for(var imageNo in images){
+        context.drawImage(images[imageNo],x + ((0.5*imageNo)*width),y,width, height);
     }
 }
 

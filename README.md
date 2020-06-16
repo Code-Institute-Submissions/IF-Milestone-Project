@@ -117,6 +117,7 @@ In addition, if it is not obvious, you should also describe how to run your code
     - modified from answer by user "jeremykenedy"
 - Canvas element creation code taken from W3Schools https://www.w3schools.com/graphics/game_canvas.asp
 - Fisher-Yates style shuffle taken from https://bost.ocks.org/mike/shuffle/
+- Canvas Image creation code from https://www.html5canvastutorials.com/tutorials/html5-canvas-image-loader/ (I couldn't have done this otherwise, this had me stumped.)
 
 ### Media
 - Card art obtained from https://github.com/hayeah/playing-cards-assets
