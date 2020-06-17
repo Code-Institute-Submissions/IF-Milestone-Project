@@ -186,6 +186,9 @@ var gameArea = {
         client.hit(deck);
         dealer.hit(deck);
         client.hit(deck);
+
+        loadImages(dealer.getHandImages(), drawImageCallback, 0, 0, 100, 150);
+        loadImages(client.getHandImages(), drawImageCallback, 0, 550, 100, 150);
     },
 }
 
@@ -234,8 +237,6 @@ function gameLogic(moveChoice){
         dealerIsActive = !client.hit(deck);
     }
 
-    loadImages(client.getHandImages(), drawImageCallback, 0, 0, 100, 150);
-
     if(dealerIsActive || !moveChoice){//dealer turn is true if the player has gotten 21 or bust, !movechoice is true if the player chose to stand.
         client.endTurn();
         document.getElementById("gameControlHit").disabled = true;
@@ -247,10 +248,9 @@ function gameLogic(moveChoice){
         dealer.endTurn();
     }
 
-    
-
-    console.log(client.hand);
-    console.log(dealer.hand);
+    wipeCanvas();//clearing canvas to prevent any bugs from redrawing images.
+    loadImages(dealer.getHandImages(), drawImageCallback, 0, 0, 100, 150);
+    loadImages(client.getHandImages(), drawImageCallback, 0, 550, 100, 150);
     //Game has ended if it runs this if() statement.
     if(!client.turn && !dealer.turn){
         document.getElementById("gameControlHit").style.display = "none";
@@ -308,6 +308,12 @@ function drawImageCallback(context, images, x, y, width, height){
     for(var imageNo in images){
         context.drawImage(images[imageNo],x + ((0.5*imageNo)*width),y,width, height);
     }
+}
+
+function wipeCanvas(){
+    var canvas = document.getElementById('GameCanvas');
+    var context = canvas.getContext('2d');
+    context.clearRect(0,0,canvas.width,canvas.height);
 }
 
 function gameEnd(state){
