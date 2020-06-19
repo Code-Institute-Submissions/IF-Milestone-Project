@@ -1,18 +1,66 @@
 /*font imports*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Sriracha&display=swap');
+/*colors & font*/
 
-/*colors*/
+navbar{
+    background-color:#6a994e;
+}
 
-/*header*/
+.logo h3{
+    font-family: 'Sriracha', cursive;
+    text-decoration: none;
+    color: #F2E8CF;
+}
 
-/*game container*/
+.logo:hover{
+    text-decoration: none;
+}
+
 .GameContainer{
     background-color:#386641;
 }
+
+#HowToPlay{
+    background-color:#Bc4749;
+    font-family:'Sriracha', cursive;
+    border-color:#Bc4749;
+    color:#F2E8CF;
+}
+
+#HowToPlay:hover{
+    background-color:#d65658;
+    border-color:#d65658;
+}
+
+.footer-content{
+    
+}
+
+/*header*/
+navbar.row{
+    height: 70px;
+}
+
+.logo{
+    margin:auto 0;
+}
+
+/*game container*/
+
+.GameContainer{
+    border: 1px solid #6A994E;
+    border-radius: 8px;
+    margin: 20px 0;
+
+}
+
 /*game buttons*/
 #gameControlHit,#gameControlStand,#replayGame{
     display:none;
 }
 
 /*footer*/
-
+.footer-content{
+    text-align: center;
+}
 /*mobile styling compat rules*/

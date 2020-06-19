@@ -76,6 +76,10 @@ In this section, you should mention all of the languages, frameworks, libraries,
     - Used for simplifying page layout.
     - Requirements:
         - [JQuery](https://jquery.com/)
+- [Fontawesome](https://fontawesome.com/)
+    - Icons
+- [Google Fonts](https://fonts.google.com/)
+    - Fonts
 
 
 ## Testing
@@ -117,7 +121,7 @@ In addition, if it is not obvious, you should also describe how to run your code
     - modified from answer by user "jeremykenedy"
 - Canvas element creation code taken from W3Schools https://www.w3schools.com/graphics/game_canvas.asp
 - Fisher-Yates style shuffle taken from https://bost.ocks.org/mike/shuffle/
-- Canvas Image creation code from https://www.html5canvastutorials.com/tutorials/html5-canvas-image-loader/ (I couldn't have done this otherwise, this had me stumped.)
+- Canvas Image creation code from https://www.html5canvastutorials.com/tutorials/html5-canvas-image-loader/
 
 ### Media
 - Card art obtained from https://github.com/hayeah/playing-cards-assets
@@ -125,4 +129,4 @@ In addition, if it is not obvious, you should also describe how to run your code
 
 ### Acknowledgements
 
-- I received inspiration for this project from X
+- Big thanks to my friends VH, Bab, and Dogmachines for helping me decide on a game to make, and directing me to resources to learn some of the things I struggled with.

@@ -104,9 +104,11 @@ class card {
 
 //Player Class
 class player{
-    constructor(){
+    constructor(x, y){
         this.turn = true;
         this.hand = [];
+        this.originX = x;
+        this.originY = y;
     }
 
     //Calculates the total value for the entity's hand.
@@ -178,23 +180,24 @@ var gameArea = {
         //ensures the controls are active
         document.getElementById("gameControlHit").disabled = false;
         document.getElementById("gameControlStand").disabled = false;
+        var xAlign = (this.canvas.width/2)-125;
 
-        client = new player();
-        dealer = new player();
+        client = new player(xAlign, this.canvas.height-150);
+        dealer = new player(xAlign, 0);
 
         //initial card draws
         client.hit(deck);
         dealer.hit(deck);
         client.hit(deck);
 
-        loadImages(dealer.getHandImages(), drawImageCallback, 0, 0, 100, 150);
-        loadImages(client.getHandImages(), drawImageCallback, 0, 550, 100, 150);
+        loadImages(dealer.getHandImages(), drawImageCallback, dealer.originX, dealer.originY, 100, 150);
+        loadImages(client.getHandImages(), drawImageCallback, client.originX, client.originY, 100, 150);
     },
 }
 
 //Global Variables
 var deck = [];
-var winDrawLossRate = [0,0,0]; //will keep as-is before making it cached page data variable thingie
+var winLossDrawRate = [0,0,0]; //will keep as-is before making it cached page data variable thingie
 var client = 0;
 var dealer = 0;
 //Deck Generation Function
@@ -249,8 +252,8 @@ function gameLogic(moveChoice){
     }
 
     wipeCanvas();//clearing canvas to prevent any bugs from redrawing images.
-    loadImages(dealer.getHandImages(), drawImageCallback, 0, 0, 100, 150);
-    loadImages(client.getHandImages(), drawImageCallback, 0, 550, 100, 150);
+    loadImages(dealer.getHandImages(), drawImageCallback, dealer.originX, dealer.originY, 100, 150);
+    loadImages(client.getHandImages(), drawImageCallback, client.originX, client.originY, 100, 150);
     //Game has ended if it runs this if() statement.
     if(!client.turn && !dealer.turn){
         document.getElementById("gameControlHit").style.display = "none";
@@ -261,22 +264,22 @@ function gameLogic(moveChoice){
         var dealerTotal = dealer.handCalc();
         
         if((client.hand.length == 2 && clientTotal == 21)&& dealer.hand.length != 2){
-            //win
+            gameEnd("Win");
         }
         else if(clientTotal > 21){
-            //lose
+            gameEnd("Lose");
         }
         else if(dealerTotal > 21){
-            //win
+            gameEnd("Win");
         }
         else if(clientTotal > dealerTotal){
-            //win
+            gameEnd("Win");
         }
-        else if(dealerTotal < clientTotal){
-            //lose
+        else if(dealerTotal > clientTotal){
+            gameEnd("Lose");
         }
         else{
-            //draw
+            gameEnd("Draw");
         }
     }
 }
@@ -317,5 +320,28 @@ function wipeCanvas(){
 }
 
 function gameEnd(state){
-
+    //get the canvas context for drawing
+    var canvas = document.getElementById('GameCanvas');
+    var context = canvas.getContext('2d');
+    context.font = "3rem Sriracha";
+    context.fillStyle = "white";
+    context.textAlign = "center"
+    //then, we need to draw the right statement based on the game state.
+    switch(state){
+        case "Win":
+            context.fillText("You Win!",canvas.width/2, canvas.height/2);
+            winLossDrawRate[0]++;
+            break;
+        case "Lose":
+            context.fillText("You Lose...",canvas.width/2, canvas.height/2);
+            winLossDrawRate[1]++;
+            break;
+        case "Draw":
+            context.fillText("It's A Draw!",canvas.width/2, canvas.height/2);
+            winLossDrawRate[2]++;
+            break;
+        //no default, as that was handled in the only place this function is called.
+    }
+    context.font = "1rem Sriracha";
+    context.fillText(`Wins: ${winLossDrawRate[0]} | Losses: ${winLossDrawRate[1]} | Draws: ${winLossDrawRate[2]}`,canvas.width/2, canvas.height/2 + 40);
 }
