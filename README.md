@@ -55,7 +55,8 @@ Due to the nature of the site, the pretty much all the user stories are going to
 
 ## Features
 
-
+The page features a game container that is shown/created when the 'start game' button is clicked, within which runs a javascript based game of blackjack. The game handles the multiple win conditions for a basic ruleset, along with tracking for the palyer's win and loss rate.
+Additionally, the page features a modal that is shown when the 'How to play' button is clicked, featuring an embedded youtube video of an explaination of the rules, along with a text section that can be viewed by clicking the button labled to show it, that has a brief explaination of the rules. 
 
 ## Technologies Used
 
