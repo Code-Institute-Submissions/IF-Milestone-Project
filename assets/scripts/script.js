@@ -155,7 +155,6 @@ let gameArea = {
         document.getElementById("gameControlHit").disabled = false;
         document.getElementById("gameControlStand").disabled = false;
         //Display the current score
-        document.getElementById("ScoreDisplay").textContent=`Wins: ${winLossDrawRate[0]} | Losses: ${winLossDrawRate[1]} | Draws: ${winLossDrawRate[2]}`
 
         //Create the Player Hand objects, along with the Alignment value.
         let xAlign = (this.canvas.width/2)-(cardWidth * 1.25);
@@ -205,6 +204,7 @@ let gameArea = {
 
     resetGame: function(){
         winLossDrawRate = [0,0,0];
+        document.getElementById("ScoreDisplay").textContent=`Wins: ${winLossDrawRate[0]} | Losses: ${winLossDrawRate[1]} | Draws: ${winLossDrawRate[2]}`
         this.generate();
     }
 }
@@ -351,4 +351,5 @@ function gameEnd(state){
             break;
         //no default, as that was handled in the only place this function is called.
     }
+    document.getElementById("ScoreDisplay").textContent=`Wins: ${winLossDrawRate[0]} | Losses: ${winLossDrawRate[1]} | Draws: ${winLossDrawRate[2]}`
 }
