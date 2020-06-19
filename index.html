@@ -36,13 +36,21 @@
                         </div>
                         <div class="modal-body">
                             <div class="container-fluid">
-                                <div class="row">
+                                <div id="RulesVideo">
                                     <iframe class="col-12" width="560" height="315" src="#" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 </div>
-                                <button onclick="$('#RulesWritten').toggle()">Show/Hide Written Rules</button>
-                                <div id="RulesWritten" class="row">
-                                    At the start of a hand, you are dealt two cards, and the dealer is dealt one.
-                                    
+                                <button class="btn text-toggle" onclick="$('#RulesWritten').toggle()">Show/Hide Written Rules</button>
+                                <div id="RulesWritten" style="display: none;" class="row">
+                                    <br>At the start of a hand, you are dealt two cards, and the dealer is dealt one. You can choose to 'Hit' (draw another card);
+                                    or 'Stand' (accept the hand you currently have).<br>
+                                    <br>
+                                    The Main goal is to get a higher value hand than the dealer, without going over 21.<br>
+                                    <br>
+                                    If you go over 21, you lose, regardless of the dealer's hand.<br>
+                                    <br>
+                                    If you are dealt an Ace and any 10-value card (10, jack, queen, or king) you have a 'blackjack' and automatically win that deal.<br>
+                                    <br>
+                                    The dealer will draw until hitting 17.
                                 </div>
                             </div>
                         </div>
@@ -58,10 +66,10 @@
                 </div>
             </div>
             <div class="row justify-content-center align-items-center">
-                <button id="startGame" class="btn col-4" type="button" onclick="gameArea.generate()">Start Game</button>
-                <button id="gameControlHit" class="btn col-2" type="button" onclick="gameLogic(true)">Hit</button>
-                <button id="gameControlStand" class="btn col-2" type="button" onclick="gameLogic(false)">Stand</button>
-                <button id="replayGame" class="btn col-4" type="button" onclick="gameArea.generate()">Replay Game</button>
+                <button id="startGame" class="btn col-sm-6 col-md-4" type="button" onclick="gameArea.generate()">Start Game</button>
+                <button id="gameControlHit" class="btn col-sm-3 col-md-2" type="button" onclick="gameLogic(true)">Hit</button>
+                <button id="gameControlStand" class="btn col-sm-3 col-md-2" type="button" onclick="gameLogic(false)">Stand</button>
+                <button id="replayGame" class="btn col-sm-6 col-md-4" type="button" onclick="gameArea.generate()">Replay Game</button>
             </div>
     </section>
     <!--Bootstrap Dependencies, including JQuery-->

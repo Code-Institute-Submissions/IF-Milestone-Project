@@ -10,6 +10,7 @@ navbar{
     font-family: 'Sriracha', cursive;
     text-decoration: none;
     color: #F2E8CF;
+    text-align:center;
 }
 
 .logo:hover{
@@ -42,6 +43,32 @@ navbar{
     background-color:#070d09;
     border-color:#070d09;
 }
+
+.modal-header, .modal-header button{
+    color:#F2E8CF;
+    font-family: 'Sriracha', sans-serif;
+    background-color:#386641;
+    border-color:#325e3b;
+}
+
+.modal-body{
+    background-color:rgb(241, 236, 223);
+    border-color:#070d09;
+}
+
+.text-toggle{
+    background-color:#Bc4749;
+    border-color:#d65658;
+    color:#F2E8CF;
+    font-family:'Sriracha', sans-serif;
+}
+
+.text-toggle:hover{
+    background-color:#d65658;
+    border-color:#d65658;
+    color:#F2E8CF;
+}
+
 /*header*/
 navbar.row{
     height: 70px;
@@ -49,6 +76,15 @@ navbar.row{
 
 .logo{
     margin:auto 0;
+}
+
+/*rules modal*/
+#RulesVideo iframe, #RulesVideo{
+    padding:0;
+}
+#RulesWritten{
+    padding:0;
+    margin:auto;
 }
 
 /*game container*/
@@ -69,3 +105,30 @@ navbar.row{
     display:none;
 }
 /*mobile styling compat rules*/
+@media(max-width:766px){
+    /*header*/
+    header navbar{
+        padding-top:10px;
+    }
+    .logo h3, #HowToPlay h3{
+        font-size: 1.5rem !important;
+    }
+    
+    /*game container*/
+    .GameContainer{
+        margin-top: 60px;
+    }
+
+}
+@media(max-width:574px){
+    /*game controls*/
+    #startGame,#gameControlHit,#gameControlStand,#replayGame{
+        max-width:50%;
+    }
+}
+
+@media(max-width:574px){
+    #startGame,#gameControlHit,#gameControlStand,#replayGame{
+        max-width:80%;
+    }
+}
