@@ -87,19 +87,6 @@ style.css recieved no errors, and 6 warnings relating to shared border & backgro
 
 
 
-
-1. Contact form:
-    1. Go to the "Contact Us" page
-    2. Try to submit the empty form and verify that an error message about the required fields appears
-    3. Try to submit the form with an invalid email address and verify that a relevant error message appears
-    4. Try to submit the form with all inputs valid and verify that a success message appears.
-
-In addition, you should mention in this section how your project looks and works on different browsers and screen sizes.
-
-You should also mention in this section any interesting bugs or problems you discovered during your testing, even if you haven't addressed them yet.
-
-If this section grows too long, you may want to split it off into a separate file and link to it from here.
-
 ## Deployment
 
 This section should describe the process you went through to deploy the project to a hosting platform (e.g. GitHub Pages or Heroku).
@@ -122,8 +109,9 @@ In addition, if it is not obvious, you should also describe how to run your code
 - Canvas Image creation code from https://www.html5canvastutorials.com/tutorials/html5-canvas-image-loader/
 
 ### Media
-- Card art obtained from https://github.com/hayeah/playing-cards-assets
-- Colour Palette generated with https://coolors.co/
+- Card art obtained from [hayeah on GitHub](https://github.com/hayeah/playing-cards-assets)
+- Colour Palette generated with [Coolors](https://coolors.co/)
+- Tutorial Video taken from [GatherTogetherGames](https://www.youtube.com/channel/UCVeEx96wzFgzhXsy7cBC8hw)
 
 ### Acknowledgements
 

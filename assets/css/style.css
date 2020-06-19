@@ -1,5 +1,5 @@
 /*font imports*/
-@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Sriracha&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sriracha&display=swap');
 /*colors & font*/
 
 nav{
@@ -21,18 +21,22 @@ nav{
     background-color:#386641;
 }
 
-#HowToPlay{
-    background-color:#Bc4749;
+#HowToPlay, #ResetGame{
     font-family:'Sriracha', cursive;
     font-size: 1.75rem;
-    border-color:#Bc4749;
     color:#F2E8CF;
 }
 
-#HowToPlay:hover{
-    background-color:#d65658;
-    border-color:#d65658;
+#ResetGame, #ResetGame:hover{
+    background-color:#070d09;
+    border-color:#070d09;
 }
+
+#HowToPlay, #HowToPlay:hover{
+    background-color:#Bc4749;
+    border-color:#Bc4749;
+}
+
 #startGame,#gameControlHit,#gameControlStand,#replayGame{
     background-color:#Bc4749;
     font-family:'Sriracha', sans-serif;
@@ -70,24 +74,29 @@ nav{
     color:#F2E8CF;
 }
 
+#ScoreDisplay{
+    color:#070d09;
+    font-family:'Sriracha', sans-serif;
+    font-size: 1.1rem;
+}
+
 /*header*/
 nav .row{
     height: 70px;
 }
 
 .logo{
+    padding: 15px;
     margin:auto 0;
-}
-
-#HowToPlay{
-    border-radius: 0;
 }
 
 /*rules modal*/
 #RulesVideo iframe, #RulesVideo{
     padding:0;
 }
+
 #RulesWritten{
+    display: none;
     padding:0;
     margin:auto;
 }
@@ -95,13 +104,22 @@ nav .row{
 /*game container*/
 
 .GameContainer{
+    display: none;
     border: 1px solid #6A994E;
     border-radius: 8px;
+    padding: 10px;
     margin: 20px 0;
+}
 
+#ScoreDisplay{
+    margin:20px 20px;
 }
 
 /*game buttons*/
+.top-controls{
+    text-align: center;
+    margin:20px 0 0 0;
+}
 #startGame,#gameControlHit,#gameControlStand,#replayGame{
     margin:20px 30px;
 }
@@ -110,30 +128,31 @@ nav .row{
     display:none;
 }
 /*mobile styling compat rules*/
+
+@media(max-width:768px){
+    #ScoreDisplay{
+        font-size: 1rem;
+    }
+}
+
 @media(max-width:766px){
     /*header*/
     header navbar{
         padding-top:10px;
     }
-    .logo h3, #HowToPlay h3{
+    .logo h3{
         font-size: 1.5rem !important;
     }
     
-    /*game container*/
-    .GameContainer{
-        margin-top: 60px;
-    }
-
 }
 @media(max-width:574px){
     /*game controls*/
     #startGame,#gameControlHit,#gameControlStand,#replayGame{
-        max-width:50%;
-    }
-}
-
-@media(max-width:574px){
-    #startGame,#gameControlHit,#gameControlStand,#replayGame{
         max-width:80%;
     }
+
+    #ResetGame span, #HowToPlay span{
+        display:none;
+    }
+
 }

@@ -9,22 +9,32 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <!--Custom CSS-->
     <link rel="stylesheet" href="assets/css/style.css">
-    <!--FontAwesome Script Import-->
-    <script src="https://kit.fontawesome.com/5fab42f761.js" crossorigin="anonymous"></script>
 </head>
 <body onresize="gameArea.resize()" class="page-main container-fluid">
     <!--Header, just a bar with a site logo and button to display the rules modal-->
     <header>
         <nav class="row justify-content-between">
             <!--Site Trigger-->
-            <a class="col-sm-12 col-md-6 col-lg-4 logo" href="">
+            <a class="col-12 logo" href="">
                 <h3><i class="fas fa-dice"></i> JavaScript Blackjack</h3>
             </a>
-                <!-- Modal Trigger Button-->
-            <button id="HowToPlay" type="button" class="btn col-sm-12 col-md-6 col-lg-4" data-toggle="modal" data-target="#rulesModal" data-video="https://www.youtube.com/embed/VB-6MvXvsKo">
-                <span>How to Play <i class="fas fa-book"></i></span>
-            </button>
-                <!-- Rules Modal -->
+        </nav>
+    </header>
+    <div>
+        <div class="row justify-content-center align-items-center">
+            <!-- Modal Trigger Button-->
+            <div class="container-fluid">
+                <div class="top-controls row justify-content-center align-items-center">
+                    <button id="ResetGame" type="button" onclick="gameArea.resetGame()" class="btn col-3">
+                        <span>Reset Game </span><i class="fas fa-redo"></i>
+                    </button>
+                    <div id="ScoreDisplay" class="col-sm-4">Wins: 0 | Losses: 0 | Draws: 0</div>
+                    <button id="HowToPlay" type="button" class="btn col-3" data-toggle="modal" data-target="#rulesModal" data-video="https://www.youtube.com/embed/VB-6MvXvsKo">
+                        <span>How to Play </span><i class="fas fa-book"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Rules Modal -->
             <div class="modal fade" id="rulesModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -37,10 +47,11 @@
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <div id="RulesVideo">
-                                    <iframe class="col-12" width="560" height="315" src="#" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <!--This has to be an iFrame due to youtube's API blocking it if it isn't. The same goes for the inline styling. This isn't great.-->
+                                    <iframe class="col-12" width="560" height="315"  src="#" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 </div>
                                 <button class="btn text-toggle" onclick="$('#RulesWritten').toggle()">Show/Hide Written Rules</button>
-                                <div id="RulesWritten" style="display: none;" class="row">
+                                <div id="RulesWritten" class="row">
                                     <br>At the start of a hand, you are dealt two cards, and the dealer is dealt one. You can choose to 'Hit' (draw another card);
                                     or 'Stand' (accept the hand you currently have).<br>
                                     <br>
@@ -57,11 +68,7 @@
                     </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div>
-        <div  class="row justify-content-center align-items-center">
-            <div class="GameContainer">
+            <div class="GameContainer row">
             <!--This is where the game goes-->
             </div>
             </div>
@@ -76,6 +83,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!--FontAwesome Script Import-->
+    <script src="https://kit.fontawesome.com/5fab42f761.js" crossorigin="anonymous"></script>
     <!--Custom JavaScript-->
     <script src="assets/scripts/script.js"></script>
 </body>
