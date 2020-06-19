@@ -13,7 +13,11 @@ $(document).ready(function() {
     generateYoutubeModal();
 });
 
-//Function to generate youtube vid in modal taken from indicated stackoverflow answer, modified slightly to not autoplay
+/*
+generateYoutubeModal
+
+
+*/
 function generateYoutubeModal() {
     let trigger = $("#HowToPlay");
     trigger.click(function() {
@@ -35,9 +39,12 @@ class card {
         this.setCardValue(number);
         this.setCardSuit(suit);
     }
+    /*  Generates and returns a text string of the location of the card's art.*/
     getImageSource(){
         return `assets/images/cards/${this.rank}_of_${this.suit}.png`;
     }
+    /* Takes takes a number and sets the cards rank and value based on that number, 
+    with special considerations taken for Aces, Jacks, Queens, and Kings.*/
     setCardValue(number){
         this.rank = SPECIAL_NUMBER.includes(number) ? CARD_NUMBER[number] : (number + 1).toString();
         this.value = SPECIAL_NUMBER.includes(number) ? CARD_VALUES[number] : (number+1);
