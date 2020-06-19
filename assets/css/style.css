@@ -31,11 +31,17 @@ navbar{
     background-color:#d65658;
     border-color:#d65658;
 }
-
-.footer-content{
-    
+#startGame,#gameControlHit,#gameControlStand,#replayGame{
+    background-color:#Bc4749;
+    font-family:'Sriracha', sans-serif;
+    border-color:#Bc4749;
+    color:#F2E8CF;
 }
 
+#gameControlStand,#replayGame{
+    background-color:#070d09;
+    border-color:#070d09;
+}
 /*header*/
 navbar.row{
     height: 70px;
@@ -55,12 +61,11 @@ navbar.row{
 }
 
 /*game buttons*/
+#startGame,#gameControlHit,#gameControlStand,#replayGame{
+    margin:20px 30px;
+}
+/*these buttons start off hidden, hence this rule.*/
 #gameControlHit,#gameControlStand,#replayGame{
     display:none;
-}
-
-/*footer*/
-.footer-content{
-    text-align: center;
 }
 /*mobile styling compat rules*/

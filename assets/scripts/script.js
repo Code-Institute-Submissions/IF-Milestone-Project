@@ -104,11 +104,13 @@ class card {
 
 //Player Class
 class player{
-    constructor(x, y){
+    constructor(x, y, cardWidth){
         this.turn = true;
         this.hand = [];
         this.originX = x;
         this.originY = y;
+        this.cardWidth = cardWidth;
+        this.cardHeight = cardWidth*1.5;
     }
 
     //Calculates the total value for the entity's hand.
@@ -154,6 +156,13 @@ class player{
         });
         return handImageSources;
     }
+
+    updateSize(width, x, y){
+        this.cardWidth = width;
+        this.cardHeight = width*1.5;
+        this.originX = x;
+        this.originY = y;
+    }
 }
 
 //The game area class code, along with a constructor.
@@ -162,8 +171,18 @@ var gameArea = {
     container: document.getElementsByClassName("GameContainer"),//Gets where the canvas is to be positioned.
     generate : function(){
         //Width and height for the play-space.
-        this.canvas.width = "700";
-        this.canvas.height = "700";
+        this.canvas.width = 700;
+        this.canvas.height = 700;
+        var cardWidth = 100;
+
+        if(window.innerWidth < 700)
+        {
+            cardWidth = 50;
+            this.canvas.width = 300;
+            this.canvas.height = 500;
+        }
+
+
         this.canvas.id= "GameCanvas";
         this.context = this.canvas.getContext("2d"); //Gets the context for image drawing and manipulation methods.
         this.container[0].insertBefore(this.canvas, null); //Adds the canvas to the DOM.
@@ -180,19 +199,43 @@ var gameArea = {
         //ensures the controls are active
         document.getElementById("gameControlHit").disabled = false;
         document.getElementById("gameControlStand").disabled = false;
-        var xAlign = (this.canvas.width/2)-125;
+        var xAlign = (this.canvas.width/2)-(cardWidth * 1.25);
 
-        client = new player(xAlign, this.canvas.height-160);
-        dealer = new player(xAlign, 10);
+        client = new player(xAlign, this.canvas.height - cardWidth*1.5, cardWidth);
+        dealer = new player(xAlign, 10, cardWidth);
 
         //initial card draws
         client.hit(deck);
         dealer.hit(deck);
         client.hit(deck);
 
-        loadImages(dealer.getHandImages(), drawImageCallback, dealer.originX, dealer.originY, 100, 150);
-        loadImages(client.getHandImages(), drawImageCallback, client.originX, client.originY, 100, 150);
+        loadImages(dealer.getHandImages(), drawImageCallback, dealer.originX, dealer.originY, dealer.cardWidth, dealer.cardHeight);
+        loadImages(client.getHandImages(), drawImageCallback, client.originX, client.originY, client.cardWidth, client.cardHeight);
     },
+    resize: function(){
+        if(client && dealer){
+            var newX = 0;
+            if(window.innerWidth < 700)
+            {
+                this.canvas.width = 300;
+                this.canvas.height = 500;
+                newX = (this.canvas.width/2)-(50*1.25);
+                client.updateSize(50, newX,this.canvas.height-client.cardHeight);
+                dealer.updateSize(50, newX, 10);
+            }
+            else{
+                this.canvas.width = 700;
+                this.canvas.height = 700;
+                newX = (this.canvas.width/2)-(100*1.25);
+                client.updateSize(100, newX,this.canvas.height-client.cardHeight);
+                dealer.updateSize(100, newX, 10);
+            }
+        
+            wipeCanvas();//clearing canvas to prevent any bugs from redrawing images.
+            loadImages(dealer.getHandImages(), drawImageCallback, dealer.originX, dealer.originY, dealer.cardWidth, dealer.cardHeight);
+            loadImages(client.getHandImages(), drawImageCallback, client.originX, client.originY, client.cardWidth, client.cardHeight);
+        }
+    }
 }
 
 //Global Variables
@@ -252,8 +295,8 @@ function gameLogic(moveChoice){
     }
 
     wipeCanvas();//clearing canvas to prevent any bugs from redrawing images.
-    loadImages(dealer.getHandImages(), drawImageCallback, dealer.originX, dealer.originY, 100, 150);
-    loadImages(client.getHandImages(), drawImageCallback, client.originX, client.originY, 100, 150);
+    loadImages(dealer.getHandImages(), drawImageCallback, dealer.originX, dealer.originY, dealer.cardWidth, dealer.cardHeight);
+    loadImages(client.getHandImages(), drawImageCallback, client.originX, client.originY, client.cardWidth, client.cardHeight);
     //Game has ended if it runs this if() statement.
     if(!client.turn && !dealer.turn){
         document.getElementById("gameControlHit").style.display = "none";

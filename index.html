@@ -12,16 +12,16 @@
     <!--FontAwesome Script Import-->
     <script src="https://kit.fontawesome.com/5fab42f761.js" crossorigin="anonymous"></script>
 </head>
-<body class="page-main container-fluid">
+<body onresize="gameArea.resize()" class="page-main container-fluid">
     <!--Header, just a bar with a site logo and button to display the rules modal-->
     <header>
         <navbar class="row justify-content-between">
             <!--Site Trigger-->
-            <a class="col logo" href="">
+            <a class="col-sm-12 col-md-6 col-lg-4 logo" href="">
                 <h3><i class="fas fa-dice"></i> JavaScript Blackjack</h3>
             </a>
             <!-- Modal Trigger Button-->
-            <button id="HowToPlay" type="button" class="btn" data-toggle="modal" data-target="#rulesModal" data-video="https://www.youtube.com/embed/VB-6MvXvsKo">
+            <button id="HowToPlay" type="button" class="btn col-sm-12 col-md-6 col-lg-4" data-toggle="modal" data-target="#rulesModal" data-video="https://www.youtube.com/embed/VB-6MvXvsKo">
                 <h3>How to Play <i class="fas fa-book"></i></h3>
             </button>
             <!-- Rules Modal -->
@@ -64,13 +64,6 @@
                 <button id="replayGame" class="btn col-4" type="button" onclick="gameArea.generate()">Replay Game</button>
             </div>
     </section>
-    <footer class="container-fluid">
-        <div class="row justify-content-center align-items-center">
-            <span class="footer-content col-6">
-                Created by Stephen Martyn-Johns
-            </span>
-        </div>
-    </footer>
     <!--Bootstrap Dependencies, including JQuery-->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
