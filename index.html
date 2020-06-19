@@ -15,16 +15,16 @@
 <body onresize="gameArea.resize()" class="page-main container-fluid">
     <!--Header, just a bar with a site logo and button to display the rules modal-->
     <header>
-        <navbar class="row justify-content-between">
+        <nav class="row justify-content-between">
             <!--Site Trigger-->
             <a class="col-sm-12 col-md-6 col-lg-4 logo" href="">
                 <h3><i class="fas fa-dice"></i> JavaScript Blackjack</h3>
             </a>
-            <!-- Modal Trigger Button-->
+                <!-- Modal Trigger Button-->
             <button id="HowToPlay" type="button" class="btn col-sm-12 col-md-6 col-lg-4" data-toggle="modal" data-target="#rulesModal" data-video="https://www.youtube.com/embed/VB-6MvXvsKo">
-                <h3>How to Play <i class="fas fa-book"></i></h3>
+                <span>How to Play <i class="fas fa-book"></i></span>
             </button>
-            <!-- Rules Modal -->
+                <!-- Rules Modal -->
             <div class="modal fade" id="rulesModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -37,7 +37,7 @@
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <div id="RulesVideo">
-                                    <iframe class="col-12" width="560" height="315" src="#" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <iframe class="col-12" width="560" height="315" src="#" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 </div>
                                 <button class="btn text-toggle" onclick="$('#RulesWritten').toggle()">Show/Hide Written Rules</button>
                                 <div id="RulesWritten" style="display: none;" class="row">
@@ -57,21 +57,21 @@
                     </div>
                 </div>
             </div>
-        </navbar>
+        </nav>
     </header>
-    <section>
-            <div  class="row justify-content-center align-items-center">
-                <div class="GameContainer">
-                <!--This is where the game goes-->
-                </div>
+    <div>
+        <div  class="row justify-content-center align-items-center">
+            <div class="GameContainer">
+            <!--This is where the game goes-->
             </div>
-            <div class="row justify-content-center align-items-center">
-                <button id="startGame" class="btn col-sm-6 col-md-4" type="button" onclick="gameArea.generate()">Start Game</button>
-                <button id="gameControlHit" class="btn col-sm-3 col-md-2" type="button" onclick="gameLogic(true)">Hit</button>
-                <button id="gameControlStand" class="btn col-sm-3 col-md-2" type="button" onclick="gameLogic(false)">Stand</button>
-                <button id="replayGame" class="btn col-sm-6 col-md-4" type="button" onclick="gameArea.generate()">Replay Game</button>
             </div>
-    </section>
+        <div class="row justify-content-center align-items-center">
+            <button id="startGame" class="btn col-sm-6 col-md-4" type="button" onclick="gameArea.generate()">Start Game</button>
+            <button id="gameControlHit" class="btn col-sm-3 col-md-2" type="button" onclick="gameLogic(true)">Hit</button>
+            <button id="gameControlStand" class="btn col-sm-3 col-md-2" type="button" onclick="gameLogic(false)">Stand</button>
+            <button id="replayGame" class="btn col-sm-6 col-md-4" type="button" onclick="gameArea.generate()">Replay Game</button>
+        </div>
+    </div>
     <!--Bootstrap Dependencies, including JQuery-->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>

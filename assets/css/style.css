@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&family=Sriracha&display=swap');
 /*colors & font*/
 
-navbar{
+nav{
     background-color:#6a994e;
 }
 
@@ -24,6 +24,7 @@ navbar{
 #HowToPlay{
     background-color:#Bc4749;
     font-family:'Sriracha', cursive;
+    font-size: 1.75rem;
     border-color:#Bc4749;
     color:#F2E8CF;
 }
@@ -70,12 +71,16 @@ navbar{
 }
 
 /*header*/
-navbar.row{
+nav .row{
     height: 70px;
 }
 
 .logo{
     margin:auto 0;
+}
+
+#HowToPlay{
+    border-radius: 0;
 }
 
 /*rules modal*/
