@@ -182,8 +182,8 @@ var gameArea = {
         document.getElementById("gameControlStand").disabled = false;
         var xAlign = (this.canvas.width/2)-125;
 
-        client = new player(xAlign, this.canvas.height-150);
-        dealer = new player(xAlign, 0);
+        client = new player(xAlign, this.canvas.height-160);
+        dealer = new player(xAlign, 10);
 
         //initial card draws
         client.hit(deck);
