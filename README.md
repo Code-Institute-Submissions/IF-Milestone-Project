@@ -7,6 +7,11 @@ for the potential future implementation of more games on the site.
 This will create value for both the user, as it wil allow for online entertainment via the playing of the provided games,
 and value for the site-owner, as they will be able to play the games on the site, and potential add new games via the template site formatting.
 
+## Demo
+A live demo version can be found here: [Github Pages](https://pokeymcfork.github.io/IF-Milestone-Project/)
+
+![Demo image](design/demodisplay.png)
+
 ## UX
 
 ### Strategy
