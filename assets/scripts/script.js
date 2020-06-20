@@ -70,7 +70,7 @@ class card {
             default:
                 console.log("Invalid Suit Number");
                 break;
-        };
+        }
     }
 }
 
@@ -107,7 +107,7 @@ class player{
             }
         });
         return handTotal;
-    };
+    }
 
     /*  Draws a card from the targeted deck 'tarDeck' and adds it to the player's hand. It then checks if the new value of the hand
         would cause the player's turn to end. 
@@ -118,7 +118,7 @@ class player{
         var total = this.calulateHandValue();//I know i should probably have the total be a member variable, but the amount of work it'd take to get it working neatly with display code and aces is too much to bother with.
         if(total >= 21 || this.hand.length == 5) this.endTurn();
         return this.turn;
-    };
+    }
 
     /*  Sets the player's turn value to false, as this acts oddly without a method.
         Returns nothing.*/
@@ -245,10 +245,10 @@ let gameArea = {
     */
     resetGame: function(){
         winLossDrawRate = [0,0,0];
-        document.getElementById("ScoreDisplay").textContent=`Wins: ${winLossDrawRate[0]} | Losses: ${winLossDrawRate[1]} | Draws: ${winLossDrawRate[2]}`
+        document.getElementById("ScoreDisplay").textContent=`Wins: ${winLossDrawRate[0]} | Losses: ${winLossDrawRate[1]} | Draws: ${winLossDrawRate[2]}`;
         this.generate();
     }
-}
+};
 
 /*  deckGeneration()
     This function takes no parameters.
@@ -290,7 +290,7 @@ function shuffle(array) {
   }
 
   return array;
-};
+}
 
 /*  gameLogic(moveChoice)
     Takes a variable - moveChoice - A boolean which denotes which move the player chose, true for 'hit', false for 'stand'.
@@ -452,7 +452,7 @@ function gameEnd(state){
     let context = canvas.getContext('2d');
     context.font = "3rem Sriracha";
     context.fillStyle = "white";
-    context.textAlign = "center"
+    context.textAlign = "center";
     //then, we need to draw the right statement based on the game state.
     switch(state){
         case "Win":
@@ -469,5 +469,5 @@ function gameEnd(state){
             break;
         //no default, as that was handled in the only place this function is called.
     }
-    document.getElementById("ScoreDisplay").textContent=`Wins: ${winLossDrawRate[0]} | Losses: ${winLossDrawRate[1]} | Draws: ${winLossDrawRate[2]}`
+    document.getElementById("ScoreDisplay").textContent=`Wins: ${winLossDrawRate[0]} | Losses: ${winLossDrawRate[1]} | Draws: ${winLossDrawRate[2]}`;
 }
