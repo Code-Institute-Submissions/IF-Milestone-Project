@@ -14,9 +14,12 @@ $(document).ready(function() {
 });
 
 /*
-generateYoutubeModal
+    generateYoutubeModal
 
+    This function creates a modal and the video contained within when clicking the button with the ID of HowToPlay.
+    It also adds an event listener to the close button to destroy the video to prevent it playing when unseen.
 
+    Returns nothing.
 */
 function generateYoutubeModal() {
     let trigger = $("#HowToPlay");
@@ -49,6 +52,7 @@ class card {
         this.rank = SPECIAL_NUMBER.includes(number) ? CARD_NUMBER[number] : (number + 1).toString();
         this.value = SPECIAL_NUMBER.includes(number) ? CARD_VALUES[number] : (number+1);
     }
+    /* Sets the suit based on the value passed via the 'suit' variable.*/
     setCardSuit(suit){
         switch(suit){
             case 0:
@@ -81,7 +85,9 @@ class player{
         this.cardHeight = cardWidth*1.5;
     }
 
-    //Calculates the total value for the entity's hand.
+    /*  Calculates the total value for the player's hand
+
+        Returns this total as a number.*/
     calulateHandValue(){
         //Sorts the hand by in ascending order of card value, then reverses it for simpler calculation.
         var sortedHand = this.hand.slice().sort((a,b)=>a.value - b.value).reverse();
@@ -100,9 +106,13 @@ class player{
                 handTotal += element.value;
             }
         });
-    return handTotal;
+        return handTotal;
     };
 
+    /*  Draws a card from the targeted deck 'tarDeck' and adds it to the player's hand. It then checks if the new value of the hand
+        would cause the player's turn to end. 
+        
+        Returns true if the player's turn has not ended, and false if it has ended. */
     hit(tarDeck){//returns false if the drawn card causes the player's turn to end, either by hitting 21 or going bust, or by hitting 5 cards.
         this.hand.push(tarDeck.shift());//removes a card from the top of the deck into the entity's hand.
         var total = this.calulateHandValue();//I know i should probably have the total be a member variable, but the amount of work it'd take to get it working neatly with display code and aces is too much to bother with.
@@ -110,16 +120,20 @@ class player{
         return this.turn;
     };
 
+    /*  Sets the player's turn value to false, as this acts oddly without a method.
+        Returns nothing.*/
     endTurn(){
         this.turn = false;
     }
 
+    //Runs the card.getImageSource() method for each card in the player's hand, then returns an array of these strings.
     getHandImages(){
         var handImageSources = [];
         this.hand.forEach(element => handImageSources.push(element.getImageSource()));
         return handImageSources;
     }
 
+    //updates the card sizes based on 'width' and relocates the originX and originY values based on the passed x and y values.
     updateSize(width, x, y){
         this.cardWidth = width;
         this.cardHeight = width*1.5;
@@ -132,6 +146,12 @@ class player{
 let gameArea = {
     canvas : document.createElement("canvas"), //Creates a canvas object. 
     container: document.getElementsByClassName("GameContainer"),//Gets where the canvas is to be positioned.
+    
+    /*  This method acts as the constructor for the gameArea class, setting up the gameplay <canvas> element, setting it's size based on the viewport width,
+        then renders the player's newly drawn hands.
+        
+        Returns nothing.
+    */
     generate : function(){
         //Width and height for the play-space.
         this.canvas.width = 700;
@@ -184,6 +204,11 @@ let gameArea = {
         }
     },
 
+    /*  gameArea.resize()
+        This method runs when the viewport is resized, altering the playarea and card sizes to better fit the new width of the viewport.
+
+        Returns nothing.
+    */
     resize: function(){
         if(client && dealer){
             let newX = 0;
@@ -209,6 +234,17 @@ let gameArea = {
         }
     },
 
+    /*
+        resetGame
+
+        This method takes no parameters.
+
+        This method sets the winLossDrawRate global variable to its initial state on loading the page, then updates the score display accordingly.
+        It then runs the generate method of gameArea in order to finish resetting the game by re-initialising the game state.
+
+        This method returns no values.
+
+    */
     resetGame: function(){
         winLossDrawRate = [0,0,0];
         document.getElementById("ScoreDisplay").textContent=`Wins: ${winLossDrawRate[0]} | Losses: ${winLossDrawRate[1]} | Draws: ${winLossDrawRate[2]}`
@@ -216,7 +252,13 @@ let gameArea = {
     }
 }
 
-//Deck Generation Function
+/*  deckGeneration()
+    This function takes no parameters.
+
+    This function creates a new deck in the deck[] global variable, and is run when generating the game area to ensure every card remains draw-able in a given round.
+
+    This function does not return a value.
+*/
 function deckGeneration(){
     deck.length = 0;//empty any potentially existing instance of the deck, to prevent it duplicating entries.
     deck = [];
@@ -228,8 +270,12 @@ function deckGeneration(){
     shuffle(deck);
 }
 
-//Implementation of a Fisher-Yates shuffle, taken from bost.ocks
-//Takes an array, returns a shuffled array in an efficient manner.
+/*  Implementation of a Fisher-Yates shuffle, taken from bost.ocks
+
+    Takes an array.
+
+    Returns a shuffled array in an efficient manner.
+*/
 function shuffle(array) {
   let m = array.length, t, i;
 
@@ -248,6 +294,17 @@ function shuffle(array) {
   return array;
 };
 
+/*  gameLogic(moveChoice)
+    Takes a variable - moveChoice - A boolean which denotes which move the player chose, true for 'hit', false for 'stand'.
+
+    It then performs the necessary logic for the game: checking to see if the player's turn ended with that move, then allowing the dealer to act
+    according to its rules.
+    The canvas is then cleared and the new hands are drawn.
+
+    If the last move taken resulted in an end state, this function then passes the appropriate value to the gameEnd(state) function.
+
+    This function has no return value.
+*/
 function gameLogic(moveChoice){
     //moveChoice is True if the player decided to hit, and false if they decided to stand.
     let dealerIsActive = false;
@@ -301,6 +358,27 @@ function gameLogic(moveChoice){
 }
 
 //loadImages code taken & adapted from: html5canvastutorials.com
+/*
+    loadImages(sources, callback, x, y, width, height)
+
+    This function takes 6 parameters.
+    These are:
+        - sources - An array of strings that are locations of images to be loaded.
+        - callback - A function to be run for each of the elements within sources.
+        - x - the X position to start the image drawing at.
+        - y - the Y position to start the image drawing at.
+        - width - the width of the image to be drawn.
+        - height - the height of the image to be drawn.
+
+    The function begins by retreiving the canvas and context for the images to be drawn to,
+    it then calculates the number of images to be drawn, and stores the value in numImages.
+    Then, it begins to create an Image element for each of these sources, waiting for it to load.
+    Once the image loads, it increments the number of loaded images.
+    It then sets the source for the generated image.
+    Once all the requesite images have loaded it performs the callback function with the necessary parameters.
+
+    This function has no return value.
+*/
 function loadImages(sources, callback, x, y, width, height) {
     let images = {};
     let loadedImages = 0;
@@ -323,18 +401,53 @@ function loadImages(sources, callback, x, y, width, height) {
     }
 }
 
+/*
+    drawImageCallback
+    
+    This function takes 6 parameters:
+        - context - the context of the canvas element to draw to.
+        - images - an array of image elements to be drawn to said canvas.
+        - x & y - the pixel coordinate position of the start point of the desired location of the images.
+        - width & height - The width and height of the images to be drawn.
+
+    This function simply iterates through the images array, drawing each image onto the canvas, then moving half the image width across to draw the next image in the array.
+    This creates a visually pleasing overlap that somewhat resembles an actual hand of cards.
+
+    This image has no return values.
+*/
 function drawImageCallback(context, images, x, y, width, height){
     for(let imageNo in images){
         context.drawImage(images[imageNo],x + ((0.5*imageNo)*width),y,width, height);
     }
 }
 
+/*
+    wipeCanvas
+
+    This function has no Parameters.
+
+    This function obtains the canvas and context to be cleared, then runs the context method clearRect to empty the canvas of images and text.
+
+    This function returns no values.
+*/
 function wipeCanvas(){
     let canvas = document.getElementById('GameCanvas');
     let context = canvas.getContext('2d');
     context.clearRect(0,0,canvas.width,canvas.height);
 }
 
+
+/*  
+    gameEnd
+
+    This function takes a string 'state' as a parameter, which represents the state of the game in regards to the client player when it is called.
+
+    This function gets the canvas and context, setting appropriate font styles to use in drawing text.
+    It then draws a message to the canvas based on if the player won, lost, or drew with the dealer.
+    It finally increments the appropriate entry for winLossDrawRate. entry 0 being wins, 1 being losses, and 2 being draws.
+
+    This function returns no values.
+*/
 function gameEnd(state){
     //get the canvas context for drawing
     let canvas = document.getElementById('GameCanvas');
