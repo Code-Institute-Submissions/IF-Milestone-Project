@@ -143,6 +143,7 @@ tracking how development was affecting various aspects of the program.
 - Card art obtained from [hayeah on GitHub](https://github.com/hayeah/playing-cards-assets)
 - Colour Palette generated with [Coolors](https://coolors.co/)
 - Tutorial Video taken from [GatherTogetherGames](https://www.youtube.com/channel/UCVeEx96wzFgzhXsy7cBC8hw)
+- Demo Image generated with [Multi-Mockup](https://techsini.com/multi-mockup/)
 
 ### Acknowledgements
 
