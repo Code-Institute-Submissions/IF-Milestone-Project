@@ -1,12 +1,20 @@
-//Global Variables
-let deck = [];
-let winLossDrawRate = [0,0,0]; //will keep as-is before making it cached page data variable thingie
-let client = 0;
-let dealer = 0;
-
+//Constants
 const CARD_NUMBER = { 0: "ace", 10: "jack", 11: "queen", 12: "king" };
-const CARD_VALUES = { 0:0, 10:10, 11:10, 12:10 };
+const CARD_VALUES = { 0: 0, 10: 10, 11: 10, 12: 10 };
+const CARD_SUITS = {0: "clubs", 1: "spades", 2: "diamonds", 3: "hearts"};
 const SPECIAL_NUMBER = [0,10, 11, 12];
+const CANVAS_HEIGHT = 450;
+const CANVAS_VIEWPORT_WIDTH_THRESHOLD = 700;
+const CANVAS_MOBILE_WIDTH = 300;
+const CANVAS_DESKTOP_WIDTH = 700;
+const CARD_MOBILE_WIDTH = 80;
+const CARD_DESKTOP_WIDTH = 100;
+
+//Global Variables
+let cardDeck = [];
+let winLossDrawRate = [0,0,0]; //will keep as-is before making it cached page data variable thingie
+let clientPlayer = 0;
+let dealerPlayer = 0;
 
 //display the modal when it's ready
 $(document).ready(function() {
@@ -54,23 +62,7 @@ class card {
     }
     /* Sets the suit based on the value passed via the 'suit' variable.*/
     setCardSuit(suit){
-        switch(suit){
-            case 0:
-                this.suit = "clubs";
-                break;
-            case 1:
-                this.suit = "diamonds";
-                break;
-            case 2:
-                this.suit = "hearts";
-                break;
-            case 3:
-                this.suit = "spades";
-                break;
-            default:
-                console.log("Invalid Suit Number");
-                break;
-        }
+        this.suit = CARD_SUITS[suit];
     }
 }
 
@@ -90,10 +82,10 @@ class player{
         Returns this total as a number.*/
     calulateHandValue(){
         //Sorts the hand by in ascending order of card value, then reverses it for simpler calculation.
-        var sortedHand = this.hand.slice().sort((a,b)=>a.value - b.value).reverse();
+        const sortedHand = this.hand.slice().sort((a,b)=>a.value - b.value).reverse();
 
         //Now, to add up the sum of the cards.
-        var handTotal = 0;
+        let handTotal = 0;
         sortedHand.forEach(element => {
             if(element.value === 0)
             {
@@ -115,7 +107,7 @@ class player{
         Returns true if the player's turn has not ended, and false if it has ended. */
     hit(tarDeck){//returns false if the drawn card causes the player's turn to end, either by hitting 21 or going bust, or by hitting 5 cards.
         this.hand.push(tarDeck.shift());//removes a card from the top of the deck into the entity's hand.
-        var total = this.calulateHandValue();//I know i should probably have the total be a member variable, but the amount of work it'd take to get it working neatly with display code and aces is too much to bother with.
+        let total = this.calulateHandValue();//I know i should probably have the total be a member variable, but the amount of work it'd take to get it working neatly with display code and aces is too much to bother with.
         if(total >= 21 || this.hand.length == 5) this.endTurn();
         return this.turn;
     }
@@ -128,22 +120,22 @@ class player{
 
     //Runs the card.getImageSource() method for each card in the player's hand, then returns an array of these strings.
     getHandImages(){
-        var handImageSources = [];
+        let handImageSources = [];
         this.hand.forEach(element => handImageSources.push(element.getImageSource()));
         return handImageSources;
     }
 
     //updates the card sizes based on 'width' and relocates the originX and originY values based on the passed x and y values.
-    updateSize(width, x, y){
+    updateSize(width, xPos, yPos){
         this.cardWidth = width;
         this.cardHeight = width*1.5;
-        this.originX = x;
-        this.originY = y;
+        this.originX = xPos;
+        this.originY = yPos;
     }
 }
 
 //The game area class code, along with a constructor.
-let gameArea = {
+const gameArea = {
     canvas : document.createElement("canvas"), //Creates a canvas object. 
     container: document.getElementsByClassName("GameContainer"),//Gets where the canvas is to be positioned.
     
@@ -154,14 +146,14 @@ let gameArea = {
     */
     generate : function(){
         //Width and height for the play-space.
-        this.canvas.width = 700;
-        this.canvas.height = 450;
-        let cardWidth = 100;
+        this.canvas.width = CANVAS_DESKTOP_WIDTH;
+        this.canvas.height = CANVAS_HEIGHT;
+        let cardWidth = CARD_DESKTOP_WIDTH;
 
-        if(window.innerWidth < 700)
+        if(window.innerWidth < CANVAS_VIEWPORT_WIDTH_THRESHOLD)
         {
-            cardWidth = 80;
-            this.canvas.width = 300;
+            cardWidth = CARD_MOBILE_WIDTH;
+            this.canvas.width = CARD_MOBILE_WIDTH;
         }
 
         this.canvas.id= "GameCanvas";
@@ -170,7 +162,7 @@ let gameArea = {
         this.container[0].style.display = "block";
 
         //then, need to generate the deck before any gamplay can occur.
-        deckGeneration();
+        generateCardDeck();
         //then, show the game controls.
         document.getElementById("startGame").style.display = "none";
         document.getElementById("replayGame").style.display = "none";
@@ -183,22 +175,22 @@ let gameArea = {
         //Display the current score
 
         //Create the Player Hand objects, along with the Alignment value.
-        let xAlign = (this.canvas.width/2)-(cardWidth * 1.25);
+        const xAlign = (this.canvas.width/2)-(cardWidth * 1.25);
 
-        client = new player(xAlign, this.canvas.height - cardWidth*1.5, cardWidth);
-        dealer = new player(xAlign, 10, cardWidth);
+        clientPlayer = new player(xAlign, this.canvas.height - cardWidth*1.5, cardWidth);
+        dealerPlayer = new player(xAlign, 10, cardWidth);
 
         //initial card draws
-        client.hit(deck);
-        dealer.hit(deck);
-        client.hit(deck);
+        clientPlayer.hit(cardDeck);
+        dealerPlayer.hit(cardDeck);
+        clientPlayer.hit(cardDeck);
         
-        loadImages(dealer.getHandImages(), drawImageCallback, dealer.originX, dealer.originY, dealer.cardWidth, dealer.cardHeight);
-        loadImages(client.getHandImages(), drawImageCallback, client.originX, client.originY, client.cardWidth, client.cardHeight);
+        loadImages(dealerPlayer.getHandImages(), drawImageCallback, dealerPlayer.originX, dealerPlayer.originY, dealerPlayer.cardWidth, dealerPlayer.cardHeight);
+        loadImages(clientPlayer.getHandImages(), drawImageCallback, clientPlayer.originX, clientPlayer.originY, clientPlayer.cardWidth, clientPlayer.cardHeight);
 
-        if(client.calulateHandValue() == 21){
-            client.endTurn();
-            dealer.endTurn();
+        if(clientPlayer.calulateHandValue() == 21){
+            clientPlayer.endTurn();
+            dealerPlayer.endTurn();
             gameLogic(false);
         }
     },
@@ -209,26 +201,26 @@ let gameArea = {
         Returns nothing.
     */
     resize: function(){
-        if(client && dealer){
+        if(clientPlayer && dealerPlayer){
             let newX = 0;
-            this.canvas.height = 450;
-            if(window.innerWidth < 700)
+            this.canvas.height = CANVAS_HEIGHT;
+            if(window.innerWidth < CANVAS_VIEWPORT_WIDTH_THRESHOLD)
             {
-                this.canvas.width = 300;
-                newX = (this.canvas.width/2)-(80*1.25);
-                client.updateSize(80, newX,this.canvas.height-client.cardHeight);
-                dealer.updateSize(80, newX, 10);
+                this.canvas.width = CANVAS_MOBILE_WIDTH;
+                newX = (this.canvas.width/2)-(CARD_MOBILE_WIDTH*1.25);
+                clientPlayer.updateSize(CARD_MOBILE_WIDTH, newX,this.canvas.height-clientPlayer.cardHeight);
+                dealerPlayer.updateSize(CARD_MOBILE_WIDTH, newX, 10);
             }
             else{
-                this.canvas.width = 700;
-                newX = (this.canvas.width/2)-(100*1.25);
-                client.updateSize(100, newX,this.canvas.height-client.cardHeight);
-                dealer.updateSize(100, newX, 10);
+                this.canvas.width = CANVAS_DESKTOP_WIDTH;
+                newX = (this.canvas.width/2)-(CARD_DESKTOP_WIDTH*1.25);
+                clientPlayer.updateSize(CARD_DESKTOP_WIDTH, newX,this.canvas.height-clientPlayer.cardHeight);
+                dealerPlayer.updateSize(CARD_DESKTOP_WIDTH, newX, 10);
             }
         
             wipeCanvas();//clearing canvas to prevent any bugs from redrawing images.
-            loadImages(dealer.getHandImages(), drawImageCallback, dealer.originX, dealer.originY, dealer.cardWidth, dealer.cardHeight);
-            loadImages(client.getHandImages(), drawImageCallback, client.originX, client.originY, client.cardWidth, client.cardHeight);
+            loadImages(dealerPlayer.getHandImages(), drawImageCallback, dealerPlayer.originX, dealerPlayer.originY, dealerPlayer.cardWidth, dealerPlayer.cardHeight);
+            loadImages(clientPlayer.getHandImages(), drawImageCallback, clientPlayer.originX, clientPlayer.originY, clientPlayer.cardWidth, clientPlayer.cardHeight);
         }
     },
 
@@ -250,22 +242,22 @@ let gameArea = {
     }
 };
 
-/*  deckGeneration()
+/*  generateCardDeck()
     This function takes no parameters.
 
     This function creates a new deck in the deck[] global variable, and is run when generating the game area to ensure every card remains draw-able in a given round.
 
     This function does not return a value.
 */
-function deckGeneration(){
-    deck.length = 0;//empty any potentially existing instance of the deck, to prevent it duplicating entries.
-    deck = [];
+function generateCardDeck(){
+    cardDeck.length = 0;//empty any potentially existing instance of the deck, to prevent it duplicating entries.
+    cardDeck = [];
     for(let suitNo = 0; suitNo < 4; suitNo++){ //condensed it all down to two for loops, and a two switch statements in a constructor.
-        for(let rankNo = 0; rankNo< 13; rankNo++){
-            deck.push(new card(rankNo, suitNo));
+        for(let rankNo = 0; rankNo< 13; rankNo++){ //4 Suits and 13 Ranks of cards.
+            cardDeck.push(new card(rankNo, suitNo));
         }
     }
-    shuffle(deck);
+    shuffleDeck(cardDeck);
 }
 
 /*  Implementation of a Fisher-Yates shuffle, taken from bost.ocks
@@ -274,7 +266,7 @@ function deckGeneration(){
 
     Returns a shuffled array in an efficient manner.
 */
-function shuffle(array) {
+function shuffleDeck(array) {
   let m = array.length, t, i;
 
   // While there remain elements to shuffle…
@@ -301,40 +293,40 @@ function shuffle(array) {
 
     If the last move taken resulted in an end state, this function then passes the appropriate value to the gameEnd(state) function.
 
-    This function has no return value.
+    returns void.
 */
 function gameLogic(moveChoice){
     //moveChoice is True if the player decided to hit, and false if they decided to stand.
     let dealerIsActive = false;
 
-    if(moveChoice){
-        dealerIsActive = !client.hit(deck);
-    }
+    if(moveChoice) dealerIsActive = !clientPlayer.hit(cardDeck);
 
     if(dealerIsActive || !moveChoice){//dealer turn is true if the player has gotten 21 or bust, !movechoice is true if the player chose to stand.
-        client.endTurn();
+        
+        clientPlayer.endTurn();
         document.getElementById("gameControlHit").disabled = true;
         document.getElementById("gameControlStand").disabled = true;
 
-        while(dealer.turn && dealer.calulateHandValue() < 17){//dealer's turn loop.
-            dealer.hit(deck); 
+        while(dealerPlayer.turn && dealerPlayer.calulateHandValue() < 17){//dealer's turn loop.
+            dealerPlayer.hit(cardDeck); 
         }
-        dealer.endTurn();
+        dealerPlayer.endTurn();
     }
 
     wipeCanvas();//clearing canvas to prevent any bugs from redrawing images.
-    loadImages(dealer.getHandImages(), drawImageCallback, dealer.originX, dealer.originY, dealer.cardWidth, dealer.cardHeight);
-    loadImages(client.getHandImages(), drawImageCallback, client.originX, client.originY, client.cardWidth, client.cardHeight);
+    loadImages(dealerPlayer.getHandImages(), drawImageCallback, dealerPlayer.originX, dealerPlayer.originY, dealerPlayer.cardWidth, dealerPlayer.cardHeight);
+    loadImages(clientPlayer.getHandImages(), drawImageCallback, clientPlayer.originX, clientPlayer.originY, clientPlayer.cardWidth, clientPlayer.cardHeight);
+
     //Game has ended if it runs this if() statement.
-    if(!client.turn && !dealer.turn){
+    if(!clientPlayer.turn && !dealerPlayer.turn){
         document.getElementById("gameControlHit").style.display = "none";
         document.getElementById("gameControlStand").style.display = "none";
         document.getElementById("replayGame").style.display = "inline-block";
 
-        let clientTotal = client.calulateHandValue();
-        let dealerTotal = dealer.calulateHandValue();
+        let clientTotal = clientPlayer.calulateHandValue();
+        let dealerTotal = dealerPlayer.calulateHandValue();
         
-        if((client.hand.length == 2 && clientTotal == 21)&& dealer.hand.length != 2){
+        if((clientPlayer.hand.length === 2 && clientTotal === 21) && dealerPlayer.hand.length !== 2){
             gameEnd("Win");
         }
         else if(clientTotal > 21){
@@ -378,6 +370,7 @@ function gameLogic(moveChoice){
     This function has no return value.
 */
 function loadImages(sources, callback, x, y, width, height) {
+
     let images = {};
     let loadedImages = 0;
     let numImages = 0;
@@ -415,7 +408,7 @@ function loadImages(sources, callback, x, y, width, height) {
 */
 function drawImageCallback(context, images, x, y, width, height){
     for(let imageNo in images){
-        context.drawImage(images[imageNo],x + ((0.5*imageNo)*width),y,width, height);
+        context.drawImage(images[imageNo], x + ((0.5*imageNo)*width), y, width, height);
     }
 }
 
@@ -431,7 +424,7 @@ function drawImageCallback(context, images, x, y, width, height){
 function wipeCanvas(){
     let canvas = document.getElementById('GameCanvas');
     let context = canvas.getContext('2d');
-    context.clearRect(0,0,canvas.width,canvas.height);
+    context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 
@@ -440,34 +433,40 @@ function wipeCanvas(){
 
     This function takes a string 'state' as a parameter, which represents the state of the game in regards to the client player when it is called.
 
-    This function gets the canvas and context, setting appropriate font styles to use in drawing text.
-    It then draws a message to the canvas based on if the player won, lost, or drew with the dealer.
-    It finally increments the appropriate entry for winLossDrawRate. entry 0 being wins, 1 being losses, and 2 being draws.
-
-    This function returns no values.
+    
 */
 function gameEnd(state){
+    //we need to draw the right statement based on the game state.
+    switch(state){
+        case "Win":
+            afterGameDisplay("You Win!", 0);
+            break;
+        case "Lose":
+            afterGameDisplay("You Lose...", 1);
+            break;
+        case "Draw":
+            afterGameDisplay("It's a Draw!", 2);
+            break;
+        //no default, as that was handled in the only place this function is called.
+    }
+}
+
+/*   afterGameDisplay
+
+    - Gets the canvas and context, setting appropriate font styles to use in drawing text.
+    - draws a message to the canvas based on if the player won, lost, or drew with the dealer.
+    - increments the appropriate entry for winLossDrawRate. entry 0 being wins, 1 being losses, and 2 being draws.
+
+    Returns void*/
+function afterGameDisplay(label, index){
     //get the canvas context for drawing
     let canvas = document.getElementById('GameCanvas');
     let context = canvas.getContext('2d');
     context.font = "3rem Sriracha";
     context.fillStyle = "white";
     context.textAlign = "center";
-    //then, we need to draw the right statement based on the game state.
-    switch(state){
-        case "Win":
-            context.fillText("You Win!",canvas.width/2, canvas.height/2);
-            winLossDrawRate[0]++;
-            break;
-        case "Lose":
-            context.fillText("You Lose...",canvas.width/2, canvas.height/2);
-            winLossDrawRate[1]++;
-            break;
-        case "Draw":
-            context.fillText("It's A Draw!",canvas.width/2, canvas.height/2);
-            winLossDrawRate[2]++;
-            break;
-        //no default, as that was handled in the only place this function is called.
-    }
+
+    context.fillText(label, canvas.width/2, canvas.height/2);
+    winLossDrawRate[index]++;
     document.getElementById("ScoreDisplay").textContent=`Wins: ${winLossDrawRate[0]} | Losses: ${winLossDrawRate[1]} | Draws: ${winLossDrawRate[2]}`;
 }
