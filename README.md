@@ -42,7 +42,7 @@ Due to the nature of the site, the pretty much all the user stories are going to
 - As a User, I want to see my own hand, along with one card of the dealer's so that I can make an informed decision on what move to make.
     - Display user's hand as they play
         - Use card art mentioned in media section
-        - card art needs to be displayed as nessicary, with the possiblity of simplistic animations to immerse the user.
+        - card art needs to be displayed as necessary, with the possiblity of simplistic animations to immerse the user.
         - dealer's hand needs special consideration, as functionality to have card hidden until end is nessicary.
 
 - As a User, I want to see and interact with a replay button so that I can continue to play the game and enjoy myself.
@@ -66,10 +66,13 @@ In this section, you should mention all of the languages, frameworks, libraries,
     - Used for simplifying page layout.
     - Requirements:
         - [JQuery](https://jquery.com/)
+
 - [Fontawesome](https://fontawesome.com/)
     - Icons
+
 - [Google Fonts](https://fonts.google.com/)
     - Fonts
+
 - Code Validators
     - [HTML - W3 Markup Validator](https://validator.w3.org/)
     - [CSS - W3 CSS Validator](https://jigsaw.w3.org/css-validator/validator)
@@ -83,21 +86,44 @@ The current versions of the index.html and style.css files were validated.
 
 index.html recieved no errors or warnings when run through the W3 HTML validator.
 
-style.css recieved no errors, and 6 warnings relating to shared border & background colours.
+style.css recieved no errors, and 6 warnings relating to shared border & background colours. These have been ignored as they do not affect readability in this context.
+
+### User Story Testing
+
+ - Video of rules is viewable, as is a written version of the rules.
+    - A button is available to bring up a modal with the appropriate background darkening and styling, with a visible youtube video and a toggleable block of text featuring the rules, and a close button.
+
+ - A user is capable of seeing their hand, along with the dealer's first card.
+    - Card art mentioned in the media section has been used, with some modification to better suit the project. The correct cards are displayed for the cards in the player and dealer's hands.
+    - No animations have been implemented, as the required ones are significantly more complex than expected at the beginning of this project.
+    - No hidden card considerations were necessary, as European rules do not use a hidden card for the dealer.
+
+ - A functional replay button is displayed at the end of a round, along with a reset button that is visible at all times. This latter button both resets the round and scoring.
+
+ - The website design is clear and readable, using a colour scheme of red/green/black with primarily white text. This maintains the casino-y feel, and the use of black and red for the button colors avoids the colour blindness issue somewhat elegantly. 
+
+### Interesting Bugs & Known Issues
+
+While there have been a few bugs during the course of development that have been squashed, one recent and surprisingly confusing one was related to a late change to the code resulting
+in the wrong card art or none at all being displayed. This came about as a result of altering the constructor for the card class, in order to make it both more readable and quicker.
+
+What turned out to be happening was that due to my unfamiliarity with the newer formatting, I had not accounted for the zero starting of an array, which had previously been hanled in a switch statement with a case 0:.
+This was quickly solved by simpling adding 1 to the value passed to a function.
 
 
+A more persistent issue is relating to the rendering of cards once more, though this time it's somewhat more baffling and less amusing.
+Simply put, on occasion cards will take dramatically longer to render, if at all. This bug is wildly inconsistent, however.
+This inconsistency combined with the nature of the issue leads me to believe it could be an issue in Chrome, or a performance based issue.
+
+Ultimately, it does not affect function dramatically enough to fix at this present time.
 
 ## Deployment
 
-This section should describe the process you went through to deploy the project to a hosting platform (e.g. GitHub Pages or Heroku).
+[GitHub Pages Link](https://pokeymcfork.github.io/IF-Milestone-Project/)
 
-In particular, you should provide all details of the differences between the deployed version and the development version, if any, including:
-- Different values for environment variables (Heroku Config Vars)?
-- Different configuration files?
-- Separate git branch?
-
-In addition, if it is not obvious, you should also describe how to run your code locally.
-
+Hosting the project was relatively easy, thanks to GitHub's Pages system. All I had to do was go into the settings for the repo and enable it.
+Before final deployment, some minor changes were made to the code, primarily the removal of any and all console logs, as these were solely for the purpose of debugging &
+tracking how development was affecting various aspects of the program.
 
 ## Credits
 
