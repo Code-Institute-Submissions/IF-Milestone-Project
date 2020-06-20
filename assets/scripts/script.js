@@ -155,14 +155,13 @@ let gameArea = {
     generate : function(){
         //Width and height for the play-space.
         this.canvas.width = 700;
-        this.canvas.height = 700;
+        this.canvas.height = 450;
         let cardWidth = 100;
 
         if(window.innerWidth < 700)
         {
-            cardWidth = 50;
+            cardWidth = 80;
             this.canvas.width = 300;
-            this.canvas.height = 500;
         }
 
         this.canvas.id= "GameCanvas";
@@ -212,17 +211,16 @@ let gameArea = {
     resize: function(){
         if(client && dealer){
             let newX = 0;
+            this.canvas.height = 450;
             if(window.innerWidth < 700)
             {
                 this.canvas.width = 300;
-                this.canvas.height = 500;
-                newX = (this.canvas.width/2)-(50*1.25);
-                client.updateSize(50, newX,this.canvas.height-client.cardHeight);
-                dealer.updateSize(50, newX, 10);
+                newX = (this.canvas.width/2)-(80*1.25);
+                client.updateSize(80, newX,this.canvas.height-client.cardHeight);
+                dealer.updateSize(80, newX, 10);
             }
             else{
                 this.canvas.width = 700;
-                this.canvas.height = 700;
                 newX = (this.canvas.width/2)-(100*1.25);
                 client.updateSize(100, newX,this.canvas.height-client.cardHeight);
                 dealer.updateSize(100, newX, 10);
