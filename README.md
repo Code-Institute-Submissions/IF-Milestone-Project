@@ -81,6 +81,7 @@ In this section, you should mention all of the languages, frameworks, libraries,
 - Code Validators
     - [HTML - W3 Markup Validator](https://validator.w3.org/)
     - [CSS - W3 CSS Validator](https://jigsaw.w3.org/css-validator/validator)
+    - [JS - JsHint](https://jshint.com/)
 
 
 ## Testing
@@ -93,6 +94,11 @@ index.html recieved no errors or warnings when run through the W3 HTML validator
 
 style.css recieved no errors, and 6 warnings relating to shared border & background colours. These have been ignored as they do not affect readability in this context.
 
+script.js recived no errors, 4 warnings, 2 undefined variables, and 2 unused variables.
+    - The warnings are 3 about filtering for loops with if statements, but this has been done elsewhere in the code before they are called.
+    - The undefined variables are both the videoSource in the generateYoutubeModal function, and recieve their definition at runtime from a HTML element.
+    - The two unused variables are src in the first loadImages for loop, which is used as an iterator for ease of use, and the second is the gameArea object, which is called in the HTML document.
+    
 ### User Story Testing
 
  - Video of rules is viewable, as is a written version of the rules.
